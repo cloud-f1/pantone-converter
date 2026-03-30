@@ -93,7 +93,7 @@ GET /api/og?pantone=INVALID     → Grey background, white text "Unknown Color"
 **Usage in HTML:**
 
 ```html
-<meta property="og:image" content="https://your-domain.com/api/og?pantone=485C" />
+<meta property="og:image" content="https://pantone-converter.vercel.app/api/og?pantone=485C" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 ```
@@ -123,9 +123,9 @@ Color detail page with full OG metadata. Share this URL on social media to trigg
 **Examples:**
 
 ```
-https://your-domain.com/color/485C
-https://your-domain.com/color/REFLEXBLUEC
-https://your-domain.com/color/COOLGRAY5C
+https://pantone-converter.vercel.app/color/485C
+https://pantone-converter.vercel.app/color/REFLEXBLUEC
+https://pantone-converter.vercel.app/color/COOLGRAY5C
 ```
 
 ## Available Colors

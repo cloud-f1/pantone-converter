@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pantone.example.com"),
+  metadataBase: new URL("https://pantone-converter.vercel.app"),
   title: {
     template: "%s | Pantone Converter",
     default: "Pantone Converter — Color Preview & OG Image Generator",

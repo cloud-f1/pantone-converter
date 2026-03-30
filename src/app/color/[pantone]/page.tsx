@@ -114,7 +114,7 @@ export default async function ColorPage({ params }: Props) {
                 <p className="truncate text-sm text-zinc-700 dark:text-zinc-300">
                   {shareUrl}
                 </p>
-                <CopyButton text={`https://pantone.example.com/color/${pantone}`} label="Copy Link" icon={<LinkIcon className="h-3.5 w-3.5" />} />
+                <CopyButton text={`https://pantone-converter.vercel.app/color/${pantone}`} label="Copy Link" icon={<LinkIcon className="h-3.5 w-3.5" />} />
               </div>
             </div>
           </div>

@@ -112,7 +112,7 @@ export default async function Home() {
                   {t.home.shareOnSocialDesc}
                 </p>
                 <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                  https://your-domain.com/color/485C
+                  https://pantone-converter.vercel.app/color/485C
                 </code>
               </div>
             </Link>
@@ -184,7 +184,7 @@ export default async function Home() {
                     <div className="h-3 w-3 rounded-full bg-zinc-300 dark:bg-zinc-600" />
                   </div>
                   <div className="ml-2 flex-1 rounded-md bg-white px-3 py-1 text-xs text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400">
-                    your-domain.com/api/og?pantone=485C
+                    pantone-converter.vercel.app/api/og?pantone=485C
                   </div>
                 </div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -210,7 +210,7 @@ export default async function Home() {
                     </div>
                   </div>
                   <pre className="overflow-x-auto bg-zinc-900 px-4 py-3 text-xs leading-relaxed text-zinc-300 dark:bg-zinc-950">
-{`<meta property="og:image" content="https://your-domain.com/api/og?pantone=485C" />
+{`<meta property="og:image" content="https://pantone-converter.vercel.app/api/og?pantone=485C" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />`}
                   </pre>
@@ -228,7 +228,7 @@ export default async function Home() {
                     </div>
                   </div>
                   <pre className="overflow-x-auto bg-zinc-900 px-4 py-3 text-xs leading-relaxed text-zinc-300 dark:bg-zinc-950">
-{`<img src="https://your-domain.com/api/og?pantone=485C" alt="Pantone 485 C" />`}
+{`<img src="https://pantone-converter.vercel.app/api/og?pantone=485C" alt="Pantone 485 C" />`}
                   </pre>
                 </div>
               </div>
