@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { PANTONE_MAP } from '@/features/color/data/pantone-map'
 import { ShareIcon, CodeIcon, SwatchIcon } from '@/components/icons'
+import { ColorTabs } from '@/components/color-tabs'
 
 export default function Home() {
   const entries = Object.entries(PANTONE_MAP)
@@ -57,7 +58,10 @@ export default function Home() {
 
           <div className="mb-10 grid gap-6 sm:grid-cols-3">
             {/* Card 1: Share on Social */}
-            <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+            <Link
+              href="/color/485C"
+              className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+            >
               <div className="h-1 bg-gradient-to-r from-rose-400 to-pink-500" />
               <div className="p-6">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-rose-50 text-rose-500 dark:bg-rose-950 dark:text-rose-400">
@@ -73,10 +77,15 @@ export default function Home() {
                   https://your-domain.com/color/485C
                 </code>
               </div>
-            </div>
+            </Link>
 
             {/* Card 2: API Integration */}
-            <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+            <a
+              href="/api/og?pantone=485C"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+            >
               <div className="h-1 bg-gradient-to-r from-violet-400 to-indigo-500" />
               <div className="p-6">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 text-violet-500 dark:bg-violet-950 dark:text-violet-400">
@@ -92,10 +101,13 @@ export default function Home() {
                   GET /api/og?pantone=485C
                 </code>
               </div>
-            </div>
+            </a>
 
             {/* Card 3: Color Reference */}
-            <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+            <a
+              href="#colors"
+              className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+            >
               <div className="h-1 bg-gradient-to-r from-cyan-400 to-teal-500" />
               <div className="p-6">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-50 text-cyan-500 dark:bg-cyan-950 dark:text-cyan-400">
@@ -111,7 +123,7 @@ export default function Home() {
                   {entries.length} Pantone C colors available
                 </code>
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Live API Preview */}
@@ -187,38 +199,7 @@ export default function Home() {
         </section>
 
         {/* Color Grid */}
-        <section>
-          <div className="mb-8 flex items-center gap-3">
-            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-              All Colors
-            </h2>
-            <span className="inline-flex items-center rounded-full bg-zinc-200 px-2.5 py-0.5 text-xs font-semibold text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-              {entries.length}
-            </span>
-          </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-            {entries.map(([key, { hex, name }]) => (
-              <Link
-                key={key}
-                href={`/color/${key}`}
-                className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-lg hover:ring-2 hover:ring-violet-400/50 dark:border-zinc-800 dark:bg-zinc-900"
-              >
-                <div
-                  className="aspect-square w-full"
-                  style={{ backgroundColor: hex }}
-                />
-                <div className="px-3 py-2.5">
-                  <p className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-                    {name}
-                  </p>
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                    {hex.toUpperCase()}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+        <ColorTabs entries={entries} />
       </main>
 
       {/* Footer */}

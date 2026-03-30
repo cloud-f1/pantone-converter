@@ -25,4 +25,5 @@ export function getContrastTextColor(hex: string): '#FFFFFF' | '#000000' {
 export const FALLBACK_COLOR: PantoneEntry = {
   hex: '#808080',
   name: 'Unknown Color',
+  family: 'neutral',
 }

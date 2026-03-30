@@ -32,6 +32,7 @@ describe('Homepage', () => {
     const colorLinks = links.filter((link) =>
       link.getAttribute('href')?.startsWith('/color/')
     )
-    expect(colorLinks.length).toBe(Object.keys(PANTONE_MAP).length)
+    // +1 for the "Share on Social" card which also links to /color/485C
+    expect(colorLinks.length).toBe(Object.keys(PANTONE_MAP).length + 1)
   })
 })

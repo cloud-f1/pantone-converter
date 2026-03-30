@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPantoneColor } from '@/features/color/data/pantone-map'
 import { getContrastTextColor, FALLBACK_COLOR } from '@/features/color/lib/color-utils'
-import { CopyIcon, ArrowLeftIcon, LinkIcon } from '@/components/icons'
+import { CopyIcon, ArrowLeftIcon, LinkIcon, CodeIcon } from '@/components/icons'
+import { CopyButton } from '@/components/copy-button'
 
 type Props = {
   params: Promise<{ pantone: string }>
@@ -109,9 +110,12 @@ export default async function ColorPage({ params }: Props) {
               <p className="text-xs font-medium uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                 Share URL
               </p>
-              <p className="mt-1 truncate text-sm text-zinc-700 dark:text-zinc-300">
-                {shareUrl}
-              </p>
+              <div className="mt-1 flex items-center gap-2">
+                <p className="truncate text-sm text-zinc-700 dark:text-zinc-300">
+                  {shareUrl}
+                </p>
+                <CopyButton text={`https://pantone.example.com/color/${pantone}`} label="Copy Link" icon={<LinkIcon className="h-3.5 w-3.5" />} />
+              </div>
             </div>
           </div>
 
@@ -122,9 +126,12 @@ export default async function ColorPage({ params }: Props) {
               <p className="text-xs font-medium uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                 OG Image
               </p>
-              <p className="mt-1 truncate text-sm text-zinc-700 dark:text-zinc-300">
-                {ogImageUrl}
-              </p>
+              <div className="mt-1 flex items-center gap-2">
+                <p className="truncate text-sm text-zinc-700 dark:text-zinc-300">
+                  {ogImageUrl}
+                </p>
+                <CopyButton text={`/api/og?pantone=${pantone}`} label="Copy" icon={<CodeIcon className="h-3.5 w-3.5" />} />
+              </div>
             </div>
           </div>
 
@@ -138,9 +145,12 @@ export default async function ColorPage({ params }: Props) {
               <p className="text-xs font-medium uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                 HEX Code
               </p>
-              <p className="mt-1 font-mono text-sm text-zinc-700 dark:text-zinc-300">
-                {hex.toUpperCase()}
-              </p>
+              <div className="mt-1 flex items-center gap-2">
+                <p className="font-mono text-sm text-zinc-700 dark:text-zinc-300">
+                  {hex.toUpperCase()}
+                </p>
+                <CopyButton text={hex} label="Copy" icon={<CopyIcon className="h-3.5 w-3.5" />} />
+              </div>
             </div>
           </div>
         </div>
