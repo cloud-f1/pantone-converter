@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import { PANTONE_MAP } from '@/features/color/data/pantone-map'
-import { ShareIcon, CodeIcon, SwatchIcon } from '@/components/icons'
+import { ShareIcon, CodeIcon, SwatchIcon, CopyIcon } from '@/components/icons'
 import { ColorTabs } from '@/components/color-tabs'
+import { CopyButton } from '@/components/copy-button'
 import { LocaleSwitcher } from '@/components/locale-switcher'
 import { getLocale } from '@/i18n/get-locale'
 import { getDictionary } from '@/i18n/get-dictionary'
@@ -96,10 +96,7 @@ export default async function Home() {
 
           <div className="mb-10 grid gap-6 sm:grid-cols-3">
             {/* Card 1: Share on Social */}
-            <Link
-              href="/color/485C"
-              className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
-            >
+            <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
               <div className="h-1 bg-gradient-to-r from-rose-400 to-pink-500" />
               <div className="p-6">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-rose-50 text-rose-500 dark:bg-rose-950 dark:text-rose-400">
@@ -111,19 +108,18 @@ export default async function Home() {
                 <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                   {t.home.shareOnSocialDesc}
                 </p>
-                <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                  https://pantone-converter.vercel.app/color/485C
-                </code>
+                <div className="mt-4">
+                  <CopyButton
+                    text="https://pantone-converter.vercel.app/color/485C"
+                    label="https://pantone-converter.vercel.app/color/485C"
+                    icon={<CopyIcon className="h-3.5 w-3.5 shrink-0" />}
+                  />
+                </div>
               </div>
-            </Link>
+            </div>
 
             {/* Card 2: API Integration */}
-            <a
-              href="/api/og?pantone=485C"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
-            >
+            <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
               <div className="h-1 bg-gradient-to-r from-violet-400 to-indigo-500" />
               <div className="p-6">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 text-violet-500 dark:bg-violet-950 dark:text-violet-400">
@@ -135,16 +131,20 @@ export default async function Home() {
                 <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                   {t.home.apiIntegrationDesc}
                 </p>
-                <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                  GET /api/og?pantone=485C
-                </code>
+                <div className="mt-4">
+                  <CopyButton
+                    text="https://pantone-converter.vercel.app/api/og?pantone=485C"
+                    label="GET /api/og?pantone=485C"
+                    icon={<CopyIcon className="h-3.5 w-3.5 shrink-0" />}
+                  />
+                </div>
               </div>
-            </a>
+            </div>
 
             {/* Card 3: Color Reference */}
             <a
               href="#colors"
-              className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+              className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
             >
               <div className="h-1 bg-gradient-to-r from-cyan-400 to-teal-500" />
               <div className="p-6">
