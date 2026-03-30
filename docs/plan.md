@@ -22,13 +22,13 @@ Next.js 16 Pantone color preview system with OG Image generation. 279 Pantone Co
 | 8 | Vercel deployment config (`vercel.json`) | Done |
 | 9 | UI redesign: icons, gradient header, split detail layout | Done |
 | 9.1 | Clickable "How to Use" cards | Done |
-| 10 | i18n (en, zh-TW, zh-CN) | In Progress |
+| 10 | i18n (en, zh-TW, zh-CN) with locale switcher | Done |
 | 11 | Favicon SVG from gradient logo | Done |
 | 12 | Copy buttons + react-hot-toast | Done |
 | 13 | Color category tabs (By Color + By Series) | Done |
-| 14 | Hero header for tool page | In Progress |
-| 15 | Expand to full Pantone C set | In Progress |
-| 16 | Search, sort & filter | In Progress |
+| 14 | Hero header with CTA buttons | Done |
+| 15 | Expanded to 496 Pantone C colors | Done |
+| 16 | Search bar + sort dropdown | Done |
 
 ---
 
