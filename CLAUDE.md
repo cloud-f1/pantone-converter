@@ -30,7 +30,7 @@ pantone-converter/                # Git root = Next.js app
 │   │   ├── locale-switcher.tsx   # Headless UI language dropdown
 │   │   └── toast-provider.tsx    # react-hot-toast provider
 │   ├── features/color/           # Pantone data + color utilities
-│   │   ├── data/pantone-map.ts   # ~496 Pantone C → HEX (with family)
+│   │   ├── data/pantone-map.ts   # 1000+ Pantone C → HEX (with family)
 │   │   └── lib/color-utils.ts    # Luminance, contrast, fallback
 │   └── app/
 │       ├── page.tsx              # Homepage: hero, use cases, color grid
@@ -75,7 +75,7 @@ pnpm test:run     # Run tests once
 
 - **Language**: Code in English; UI supports en, zh-TW, zh-CN via cookie-based i18n
 - **Styling**: Tailwind CSS utility classes only; no CSS modules
-- **Data**: `src/features/color/data/pantone-map.ts` — ~496 entries, each with `hex`, `name`, `family` fields
+- **Data**: `src/features/color/data/pantone-map.ts` — 1000+ entries, each with `hex`, `name`, `family` fields
 - **OG Images**: Generated via `next/og` in Edge Runtime at `/api/og?pantone=XXX`, includes gradient logo + bottom bar
 - **Routing**: `/color/[pantone]` dynamic route for individual color pages
 - **Fallback**: Unknown Pantone codes show a grey placeholder, never error

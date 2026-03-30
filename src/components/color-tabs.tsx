@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import type { PantoneEntry } from '@/features/color/data/pantone-map'
 import { getRelativeLuminance } from '@/features/color/lib/color-utils'
 
@@ -39,7 +40,9 @@ const SERIES_TABS = [
   { key: '4xx', label: '4xx', range: [400, 499] as const },
   { key: '5xx', label: '5xx', range: [500, 599] as const },
   { key: '6xx', label: '6xx', range: [600, 699] as const },
-  { key: '7xx', label: '7xx', range: [700, 799] as const },
+  { key: '7xxx', label: '7xxx', range: [700, 7999] as const },
+  { key: '1xxx', label: '1xxx', range: [1000, 1999] as const },
+  { key: '2xxx', label: '2xxx', range: [2000, 2999] as const },
   { key: 'named', label: 'Named' },
 ]
 
@@ -160,15 +163,34 @@ export function ColorTabs({ entries }: ColorTabsProps) {
             </button>
           )}
         </div>
-        <select
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value as SortOption)}
-          className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-400/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
-        >
-          {SORT_OPTIONS.map((opt) => (
-            <option key={opt.key} value={opt.key}>{opt.label}</option>
-          ))}
-        </select>
+        <Menu as="div" className="relative">
+          <MenuButton className="inline-flex items-center gap-2 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-700 transition-all hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
+            <span>{SORT_OPTIONS.find((o) => o.key === sortBy)?.label ?? 'Sort'}</span>
+            <svg className="h-4 w-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </MenuButton>
+          <MenuItems
+            transition
+            className="absolute right-0 z-50 mt-2 w-44 origin-top-right rounded-xl border border-zinc-200 bg-white p-1 shadow-lg ring-1 ring-black/5 transition duration-150 ease-out data-[closed]:scale-95 data-[closed]:opacity-0 dark:border-zinc-700 dark:bg-zinc-800 dark:ring-white/5"
+          >
+            {SORT_OPTIONS.map((opt) => (
+              <MenuItem key={opt.key}>
+                <button
+                  onClick={() => setSortBy(opt.key)}
+                  className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors data-[focus]:bg-violet-50 dark:data-[focus]:bg-violet-950/50"
+                >
+                  <span className="font-medium text-zinc-900 dark:text-zinc-100">{opt.label}</span>
+                  {opt.key === sortBy && (
+                    <svg className="h-4 w-4 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </button>
+              </MenuItem>
+            ))}
+          </MenuItems>
+        </Menu>
       </div>
 
       {/* Mode toggle */}
