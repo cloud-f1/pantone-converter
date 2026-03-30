@@ -40,9 +40,12 @@ const SERIES_TABS = [
   { key: '4xx', label: '4xx', range: [400, 499] as const },
   { key: '5xx', label: '5xx', range: [500, 599] as const },
   { key: '6xx', label: '6xx', range: [600, 699] as const },
-  { key: '7xxx', label: '7xxx', range: [700, 7999] as const },
+  { key: '7xx', label: '7xx', range: [700, 799] as const },
   { key: '1xxx', label: '1xxx', range: [1000, 1999] as const },
   { key: '2xxx', label: '2xxx', range: [2000, 2999] as const },
+  { key: '3xxx', label: '3xxx', range: [3000, 3999] as const },
+  { key: '4xxx', label: '4xxx', range: [4000, 4999] as const },
+  { key: '7xxx', label: '7xxx', range: [7000, 7999] as const },
   { key: 'named', label: 'Named' },
 ]
 
