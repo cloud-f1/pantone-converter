@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import toast from 'react-hot-toast'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import { locales, localeNames, type Locale } from '@/i18n/config'
 
@@ -19,9 +20,11 @@ export function LocaleSwitcher({ current }: { current: Locale }) {
   const router = useRouter()
 
   const handleChange = useCallback((newLocale: Locale) => {
+    if (newLocale === current) return
     setLocaleCookie(newLocale)
+    toast.success(`Language changed to ${localeNames[newLocale]}`)
     router.refresh()
-  }, [router])
+  }, [router, current])
 
   return (
     <Menu as="div" className="relative">
