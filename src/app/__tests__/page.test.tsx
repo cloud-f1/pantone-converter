@@ -6,7 +6,9 @@ import { PANTONE_MAP } from '@/features/color/data/pantone-map'
 describe('Homepage', () => {
   it('should render the title', () => {
     render(<Home />)
-    expect(screen.getByText('Pantone Color Converter')).toBeDefined()
+    const heading = screen.getByRole('heading', { level: 1 })
+    expect(heading.textContent).toContain('Pantone')
+    expect(heading.textContent).toContain('Color Converter')
   })
 
   it('should render How to Use section', () => {
