@@ -52,7 +52,7 @@ export default async function ColorPage({ params }: Props) {
       {/* Back navigation — floating pill over swatch */}
       <Link
         href="/"
-        className="absolute left-4 top-4 z-10 flex items-center gap-1.5 rounded-full bg-black/20 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/30 dark:bg-white/15 dark:hover:bg-white/25"
+        className="absolute left-3 top-3 sm:left-6 sm:top-6 z-10 flex items-center gap-1.5 rounded-full bg-black/20 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/30 dark:bg-white/15 dark:hover:bg-white/25"
       >
         <ArrowLeftIcon className="h-4 w-4" />
         All Colors
@@ -60,17 +60,17 @@ export default async function ColorPage({ params }: Props) {
 
       {/* Color swatch area — ~60vh */}
       <div
-        className="relative flex min-h-[60vh] flex-col items-center justify-center px-6"
+        className="relative flex min-h-[40vh] sm:min-h-[50vh] md:min-h-[60vh] flex-col items-center justify-center px-4 sm:px-6"
         style={{ backgroundColor: hex }}
       >
         <h1
-          className="text-center text-5xl font-bold tracking-wide sm:text-6xl md:text-7xl"
+          className="text-center text-4xl sm:text-5xl md:text-7xl font-bold tracking-wide"
           style={{ color: textColor, textShadow: '0 1px 6px rgba(0,0,0,0.15)' }}
         >
           {name}
         </h1>
         <p
-          className="mt-4 text-center text-2xl font-light sm:text-3xl"
+          className="mt-4 text-center text-lg sm:text-xl md:text-2xl font-light"
           style={{ color: textColor, opacity: 0.85, textShadow: '0 1px 4px rgba(0,0,0,0.1)' }}
         >
           {hex.toUpperCase()}
@@ -78,7 +78,7 @@ export default async function ColorPage({ params }: Props) {
       </div>
 
       {/* Info card — overlaps the swatch */}
-      <div className="-mt-8 relative z-10 mx-auto w-full max-w-2xl flex-1 rounded-t-3xl bg-white px-6 pb-12 pt-8 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] dark:bg-zinc-900 dark:shadow-[0_-4px_24px_rgba(0,0,0,0.3)]">
+      <div className="-mt-8 relative z-10 mx-auto w-full max-w-2xl flex-1 rounded-t-3xl bg-white p-4 sm:p-6 md:p-8 pb-12 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] dark:bg-zinc-900 dark:shadow-[0_-4px_24px_rgba(0,0,0,0.3)]">
         {/* Header: color name + dot */}
         <div className="mb-6 flex items-center gap-3">
           <span
@@ -111,7 +111,7 @@ export default async function ColorPage({ params }: Props) {
                 Share URL
               </p>
               <div className="mt-1 flex items-center gap-2">
-                <p className="truncate text-sm text-zinc-700 dark:text-zinc-300">
+                <p className="min-w-0 truncate text-sm text-zinc-700 dark:text-zinc-300">
                   {shareUrl}
                 </p>
                 <CopyButton text={`https://pantone-converter.vercel.app/color/${pantone}`} label="Copy Link" icon={<LinkIcon className="h-3.5 w-3.5" />} />
@@ -127,7 +127,7 @@ export default async function ColorPage({ params }: Props) {
                 OG Image
               </p>
               <div className="mt-1 flex items-center gap-2">
-                <p className="truncate text-sm text-zinc-700 dark:text-zinc-300">
+                <p className="min-w-0 truncate text-sm text-zinc-700 dark:text-zinc-300">
                   {ogImageUrl}
                 </p>
                 <CopyButton text={`/api/og?pantone=${pantone}`} label="Copy" icon={<CodeIcon className="h-3.5 w-3.5" />} />

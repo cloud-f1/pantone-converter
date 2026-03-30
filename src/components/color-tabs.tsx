@@ -166,8 +166,8 @@ export function ColorTabs({ entries }: ColorTabsProps) {
             </button>
           )}
         </div>
-        <Menu as="div" className="relative">
-          <MenuButton className="inline-flex items-center gap-2 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-700 transition-all hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
+        <Menu as="div" className="relative w-full sm:w-auto">
+          <MenuButton className="inline-flex w-full items-center justify-between gap-2 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-700 transition-all hover:bg-zinc-50 sm:w-auto sm:justify-start dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
             <span>{SORT_OPTIONS.find((o) => o.key === sortBy)?.label ?? 'Sort'}</span>
             <svg className="h-4 w-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -197,7 +197,7 @@ export function ColorTabs({ entries }: ColorTabsProps) {
       </div>
 
       {/* Mode toggle + count */}
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
             <button
@@ -236,7 +236,7 @@ export function ColorTabs({ entries }: ColorTabsProps) {
       </div>
 
       {/* Tab pills — compact, wrapping */}
-      <div className="mb-6 flex flex-wrap items-center gap-1.5">
+      <div className="mb-6 flex flex-wrap items-center gap-1 sm:gap-1.5">
         {tabs.map((tab) => {
           const count = getCount(tab.key)
           if (count === 0 && tab.key !== 'all') return null
@@ -267,7 +267,7 @@ export function ColorTabs({ entries }: ColorTabsProps) {
       )}
 
       {/* Color grid */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {sorted.map(([key, { hex, name }]) => (
           <Link
             key={key}

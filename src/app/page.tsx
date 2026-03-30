@@ -14,9 +14,9 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       {/* Hero */}
-      <header className="relative overflow-hidden border-b border-zinc-200 bg-gradient-to-b from-zinc-50 via-white to-zinc-50 px-6 py-20 dark:border-zinc-800 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
+      <header className="relative overflow-hidden border-b border-zinc-200 bg-gradient-to-b from-zinc-50 via-white to-zinc-50 px-4 py-12 sm:px-6 sm:py-20 dark:border-zinc-800 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
         {/* Language switcher - top right */}
-        <div className="absolute right-6 top-6 z-10">
+        <div className="absolute right-4 top-4 z-10 sm:right-6 sm:top-6">
           <LocaleSwitcher current={locale} />
         </div>
 
@@ -48,7 +48,7 @@ export default async function Home() {
           </div>
 
           {/* Title */}
-          <h1 className="text-5xl font-extrabold tracking-tight text-zinc-900 sm:text-6xl dark:text-zinc-50">
+          <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-5xl md:text-6xl dark:text-zinc-50">
             Pantone{' '}
             <span className="bg-gradient-to-r from-rose-500 via-violet-500 to-cyan-500 bg-clip-text text-transparent">
               Color Converter
@@ -56,12 +56,12 @@ export default async function Home() {
           </h1>
 
           {/* Tagline */}
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
             {t.site.tagline}
           </p>
 
           {/* CTA Buttons */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
             <a
               href="#colors"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500 via-violet-500 to-cyan-500 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:shadow-xl hover:shadow-violet-500/30 hover:brightness-110"
@@ -87,9 +87,9 @@ export default async function Home() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-6 py-10">
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
         {/* How to Use Section */}
-        <section className="mb-14">
+        <section className="mb-10 sm:mb-14">
           <h2 className="mb-8 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
             {t.home.howToUse}
           </h2>
@@ -98,7 +98,7 @@ export default async function Home() {
             {/* Card 1: Share on Social */}
             <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
               <div className="h-1 bg-gradient-to-r from-rose-400 to-pink-500" />
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-rose-50 text-rose-500 dark:bg-rose-950 dark:text-rose-400">
                   <ShareIcon className="h-5 w-5" />
                 </div>
@@ -121,7 +121,7 @@ export default async function Home() {
             {/* Card 2: API Integration */}
             <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
               <div className="h-1 bg-gradient-to-r from-violet-400 to-indigo-500" />
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 text-violet-500 dark:bg-violet-950 dark:text-violet-400">
                   <CodeIcon className="h-5 w-5" />
                 </div>
@@ -147,7 +147,7 @@ export default async function Home() {
               className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
             >
               <div className="h-1 bg-gradient-to-r from-cyan-400 to-teal-500" />
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-50 text-cyan-500 dark:bg-cyan-950 dark:text-cyan-400">
                   <SwatchIcon className="h-5 w-5" />
                 </div>
@@ -166,7 +166,7 @@ export default async function Home() {
 
           {/* Live API Preview */}
           <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-            <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
+            <div className="border-b border-zinc-200 px-4 py-4 sm:px-6 dark:border-zinc-800">
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
                 {t.home.livePreview}
               </h3>
@@ -174,7 +174,7 @@ export default async function Home() {
                 {t.home.livePreviewDesc}
               </p>
             </div>
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               {/* Browser-like frame */}
               <div className="mx-auto max-w-2xl overflow-hidden rounded-lg border border-zinc-200 shadow-lg dark:border-zinc-700">
                 <div className="flex items-center gap-2 bg-zinc-100 px-4 py-2.5 dark:bg-zinc-800">
@@ -183,7 +183,7 @@ export default async function Home() {
                     <div className="h-3 w-3 rounded-full bg-zinc-300 dark:bg-zinc-600" />
                     <div className="h-3 w-3 rounded-full bg-zinc-300 dark:bg-zinc-600" />
                   </div>
-                  <div className="ml-2 flex-1 rounded-md bg-white px-3 py-1 text-xs text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400">
+                  <div className="ml-2 flex-1 truncate rounded-md bg-white px-3 py-1 text-xs text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400">
                     pantone-converter.vercel.app/api/og?pantone=485C
                   </div>
                 </div>
@@ -241,7 +241,7 @@ export default async function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-200 bg-white px-6 py-6 dark:border-zinc-800 dark:bg-zinc-900">
+      <footer className="border-t border-zinc-200 bg-white px-4 py-6 sm:px-6 dark:border-zinc-800 dark:bg-zinc-900">
         <div className="mx-auto flex max-w-7xl items-center justify-between text-sm text-zinc-500 dark:text-zinc-400">
           <p>
             {t.footer.poweredBy}{' '}
