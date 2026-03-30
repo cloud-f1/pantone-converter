@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "Pantone 色号转换器",
+    "tagline": "即时预览并分享 Pantone 色号，自动生成 LINE、Slack、Facebook 社交预览图"
+  },
+  "home": {
+    "howToUse": "如何使用",
+    "shareOnSocial": "分享到社交平台",
+    "shareOnSocialDesc": "复制色号页面网址，粘贴到 LINE、Slack 或 Facebook。平台会自动生成带有该颜色的预览卡片。",
+    "apiIntegration": "API 集成",
+    "apiIntegrationDesc": "调用 OG 图片 API 获取 1200x630 的 PNG 图片。可用于电子邮件、文档或嵌入页面。",
+    "colorReference": "色号参考",
+    "colorReferenceDesc": "浏览下方所有色号。点击任一色卡可查看详细页面，并获取分享网址。",
+    "livePreview": "实时预览",
+    "livePreviewDesc": "此图片由 API 实时生成。试试更改网址参数。",
+    "browseColors": "浏览色号",
+    "tryApi": "试用 API",
+    "colorsAvailable": "{count} 个 Pantone C 色号",
+    "poweredBy": "技术驱动",
+    "colorsIndexed": "已收录 {count} 个 Pantone 色号"
+  },
+  "color": {
+    "backToAll": "所有色号",
+    "shareUrl": "分享网址",
+    "ogImage": "OG 图片",
+    "hexCode": "HEX 色码",
+    "unknown": "未知色号",
+    "unknownDesc": "在数据库中找不到 Pantone 色号「{code}」。",
+    "copyLink": "复制链接",
+    "copyHex": "复制",
+    "copyOg": "复制"
+  },
+  "tabs": {
+    "byColor": "按色系",
+    "bySeries": "按编号",
+    "showing": "显示 {count} / {total} 个色号",
+    "searchPlaceholder": "搜索色号...",
+    "noResults": "找不到色号",
+    "noResultsHint": "请尝试其他搜索条件"
+  },
+  "footer": {
+    "poweredBy": "技术驱动"
+  }
+}

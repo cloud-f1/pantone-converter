@@ -2,49 +2,87 @@ import Link from 'next/link'
 import { PANTONE_MAP } from '@/features/color/data/pantone-map'
 import { ShareIcon, CodeIcon, SwatchIcon } from '@/components/icons'
 import { ColorTabs } from '@/components/color-tabs'
+import { LocaleSwitcher } from '@/components/locale-switcher'
+import { getLocale } from '@/i18n/get-locale'
+import { getDictionary } from '@/i18n/get-dictionary'
 
-export default function Home() {
+export default async function Home() {
+  const locale = await getLocale()
+  const t = await getDictionary(locale)
   const entries = Object.entries(PANTONE_MAP)
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      {/* Header */}
-      <header className="border-b border-zinc-200 bg-white px-6 py-12 dark:border-zinc-800 dark:bg-zinc-900">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500 via-violet-500 to-cyan-500 shadow-lg">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="13.5" cy="6.5" r="0.5" fill="white" stroke="none" />
-                <circle cx="17.5" cy="10.5" r="0.5" fill="white" stroke="none" />
-                <circle cx="8.5" cy="7.5" r="0.5" fill="white" stroke="none" />
-                <circle cx="6.5" cy="12.5" r="0.5" fill="white" stroke="none" />
-                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
-                Pantone{' '}
-                <span className="bg-gradient-to-r from-rose-500 via-violet-500 to-cyan-500 bg-clip-text text-transparent">
-                  Color Converter
-                </span>
-              </h1>
-              <p className="mt-2 flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
-                Browse and share Pantone colors with rich previews
-                <span className="inline-flex items-center rounded-full bg-violet-100 px-2.5 py-0.5 text-xs font-semibold text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">
-                  {entries.length} colors
-                </span>
-              </p>
-            </div>
+      {/* Hero */}
+      <header className="relative overflow-hidden border-b border-zinc-200 bg-gradient-to-b from-zinc-50 via-white to-zinc-50 px-6 py-20 dark:border-zinc-800 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
+        {/* Language switcher - top right */}
+        <div className="absolute right-6 top-6 z-10">
+          <LocaleSwitcher current={locale} />
+        </div>
+
+        {/* Decorative background blur */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="h-72 w-72 rounded-full bg-gradient-to-br from-rose-500/10 via-violet-500/10 to-cyan-500/10 blur-3xl" />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl text-center">
+          {/* Logo */}
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500 via-violet-500 to-cyan-500 shadow-xl shadow-violet-500/20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={32}
+              height={32}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="13.5" cy="6.5" r="0.5" fill="white" stroke="none" />
+              <circle cx="17.5" cy="10.5" r="0.5" fill="white" stroke="none" />
+              <circle cx="8.5" cy="7.5" r="0.5" fill="white" stroke="none" />
+              <circle cx="6.5" cy="12.5" r="0.5" fill="white" stroke="none" />
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+            </svg>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-5xl font-extrabold tracking-tight text-zinc-900 sm:text-6xl dark:text-zinc-50">
+            Pantone{' '}
+            <span className="bg-gradient-to-r from-rose-500 via-violet-500 to-cyan-500 bg-clip-text text-transparent">
+              Color Converter
+            </span>
+          </h1>
+
+          {/* Tagline */}
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-zinc-600 dark:text-zinc-400">
+            {t.site.tagline}
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="#colors"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500 via-violet-500 to-cyan-500 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:shadow-xl hover:shadow-violet-500/30 hover:brightness-110"
+            >
+              {t.home.browseColors}
+            </a>
+            <a
+              href="/api/og?pantone=485C"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white px-7 py-3 text-sm font-semibold text-zinc-700 transition-all hover:border-zinc-400 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:bg-zinc-800"
+            >
+              {t.home.tryApi}
+            </a>
+          </div>
+
+          {/* Color count badge */}
+          <div className="mt-6">
+            <span className="inline-flex items-center rounded-full bg-violet-100 px-3 py-1 text-xs font-semibold text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">
+              {entries.length} colors available
+            </span>
           </div>
         </div>
       </header>
@@ -53,7 +91,7 @@ export default function Home() {
         {/* How to Use Section */}
         <section className="mb-14">
           <h2 className="mb-8 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-            How to Use
+            {t.home.howToUse}
           </h2>
 
           <div className="mb-10 grid gap-6 sm:grid-cols-3">
@@ -68,10 +106,10 @@ export default function Home() {
                   <ShareIcon className="h-5 w-5" />
                 </div>
                 <h3 className="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                  Share on Social
+                  {t.home.shareOnSocial}
                 </h3>
                 <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  Copy a color page URL and paste into LINE, Slack, or Facebook. The platform auto-generates a rich preview card with the exact color.
+                  {t.home.shareOnSocialDesc}
                 </p>
                 <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                   https://your-domain.com/color/485C
@@ -92,10 +130,10 @@ export default function Home() {
                   <CodeIcon className="h-5 w-5" />
                 </div>
                 <h3 className="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                  API Integration
+                  {t.home.apiIntegration}
                 </h3>
                 <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  Call the OG image API to get a 1200x630 PNG of any Pantone color. Use in emails, docs, or embed in your own pages.
+                  {t.home.apiIntegrationDesc}
                 </p>
                 <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                   GET /api/og?pantone=485C
@@ -114,10 +152,10 @@ export default function Home() {
                   <SwatchIcon className="h-5 w-5" />
                 </div>
                 <h3 className="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                  Color Reference
+                  {t.home.colorReference}
                 </h3>
                 <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  Browse all colors below. Click any card to see the full detail page with copyable URL and color information.
+                  {t.home.colorReferenceDesc}
                 </p>
                 <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                   {entries.length} Pantone C colors available
@@ -130,10 +168,10 @@ export default function Home() {
           <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
             <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                Live Preview
+                {t.home.livePreview}
               </h3>
               <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                This image is generated on-the-fly by the API. Try changing the URL parameter.
+                {t.home.livePreviewDesc}
               </p>
             </div>
             <div className="p-6">
@@ -206,10 +244,10 @@ export default function Home() {
       <footer className="border-t border-zinc-200 bg-white px-6 py-6 dark:border-zinc-800 dark:bg-zinc-900">
         <div className="mx-auto flex max-w-7xl items-center justify-between text-sm text-zinc-500 dark:text-zinc-400">
           <p>
-            Powered by{' '}
+            {t.footer.poweredBy}{' '}
             <span className="font-medium text-zinc-700 dark:text-zinc-300">Next.js</span>
           </p>
-          <p>{entries.length} Pantone colors indexed</p>
+          <p>{t.home.colorsIndexed.replace('{count}', String(entries.length))}</p>
         </div>
       </footer>
     </div>

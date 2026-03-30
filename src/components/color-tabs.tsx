@@ -3,6 +3,18 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import type { PantoneEntry } from '@/features/color/data/pantone-map'
+import { getRelativeLuminance } from '@/features/color/lib/color-utils'
+
+type SortOption = 'default' | 'name-asc' | 'name-desc' | 'light' | 'dark' | 'code'
+
+const SORT_OPTIONS: { key: SortOption; label: string }[] = [
+  { key: 'default', label: 'Default' },
+  { key: 'name-asc', label: 'Name A→Z' },
+  { key: 'name-desc', label: 'Name Z→A' },
+  { key: 'light', label: 'Light → Dark' },
+  { key: 'dark', label: 'Dark → Light' },
+  { key: 'code', label: 'Code Numeric' },
+]
 
 const FAMILY_TABS = [
   { key: 'all', label: 'All' },
@@ -61,6 +73,8 @@ function countBySeries(entries: [string, PantoneEntry][], tabKey: string) {
 export function ColorTabs({ entries }: ColorTabsProps) {
   const [mode, setMode] = useState<'family' | 'series'>('family')
   const [activeTab, setActiveTab] = useState('all')
+  const [query, setQuery] = useState('')
+  const [sortBy, setSortBy] = useState<SortOption>('default')
 
   const filtered = (() => {
     if (activeTab === 'all') return entries
@@ -69,6 +83,32 @@ export function ColorTabs({ entries }: ColorTabsProps) {
     }
     return filterBySeries(entries, activeTab)
   })()
+
+  const searched = query
+    ? filtered.filter(([key, { hex, name }]) => {
+        const q = query.toLowerCase()
+        return key.toLowerCase().includes(q)
+          || name.toLowerCase().includes(q)
+          || hex.toLowerCase().includes(q)
+      })
+    : filtered
+
+  const sorted = [...searched].sort((a, b) => {
+    const [keyA, entryA] = a
+    const [keyB, entryB] = b
+    switch (sortBy) {
+      case 'name-asc': return entryA.name.localeCompare(entryB.name)
+      case 'name-desc': return entryB.name.localeCompare(entryA.name)
+      case 'light': return getRelativeLuminance(entryB.hex) - getRelativeLuminance(entryA.hex)
+      case 'dark': return getRelativeLuminance(entryA.hex) - getRelativeLuminance(entryB.hex)
+      case 'code': {
+        const numA = parseInt(keyA) || 9999
+        const numB = parseInt(keyB) || 9999
+        return numA - numB
+      }
+      default: return 0
+    }
+  })
 
   const tabs = mode === 'family' ? FAMILY_TABS : SERIES_TABS
 
@@ -82,6 +122,55 @@ export function ColorTabs({ entries }: ColorTabsProps) {
 
   return (
     <section id="colors">
+      {/* Search + Sort row */}
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+        <div className="relative flex-1">
+          <input
+            type="text"
+            placeholder="Search colors..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-full rounded-lg border border-zinc-200 bg-white py-2 pl-10 pr-10 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-400/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50 dark:placeholder:text-zinc-500"
+          />
+          <svg
+            className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1 0 5.1 5.1a7.5 7.5 0 0 0 11.55 11.55z" />
+          </svg>
+          {query && (
+            <button
+              onClick={() => setQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+            >
+              <svg
+                className="h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
+        </div>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as SortOption)}
+          className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-400/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+        >
+          {SORT_OPTIONS.map((opt) => (
+            <option key={opt.key} value={opt.key}>{opt.label}</option>
+          ))}
+        </select>
+      </div>
+
       {/* Mode toggle */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
@@ -108,7 +197,7 @@ export function ColorTabs({ entries }: ColorTabsProps) {
         </div>
 
         <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          Showing {filtered.length} of {entries.length} colors
+          Showing {sorted.length} of {entries.length} colors
         </p>
       </div>
 
@@ -134,9 +223,17 @@ export function ColorTabs({ entries }: ColorTabsProps) {
         })}
       </div>
 
+      {/* Empty state */}
+      {sorted.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-16 text-zinc-400">
+          <p className="text-lg font-medium">No colors found</p>
+          <p className="mt-1 text-sm">Try a different search term or filter</p>
+        </div>
+      )}
+
       {/* Color grid */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-        {filtered.map(([key, { hex, name }]) => (
+        {sorted.map(([key, { hex, name }]) => (
           <Link
             key={key}
             href={`/color/${key}`}

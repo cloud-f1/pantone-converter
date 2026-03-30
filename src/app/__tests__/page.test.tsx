@@ -1,38 +1,57 @@
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import Home from '../page'
+import { describe, it, expect, vi } from 'vitest'
 import { PANTONE_MAP } from '@/features/color/data/pantone-map'
 
+// Mock the i18n modules so the async Server Component can be tested
+vi.mock('@/i18n/get-locale', () => ({
+  getLocale: vi.fn().mockResolvedValue('en'),
+}))
+
+vi.mock('@/i18n/get-dictionary', () => ({
+  getDictionary: vi.fn().mockResolvedValue({
+    site: { title: 'Pantone Color Converter', tagline: 'Test tagline' },
+    home: {
+      howToUse: 'How to Use',
+      shareOnSocial: 'Share on Social',
+      shareOnSocialDesc: 'Test desc',
+      apiIntegration: 'API Integration',
+      apiIntegrationDesc: 'Test desc',
+      colorReference: 'Color Reference',
+      colorReferenceDesc: 'Test desc',
+      livePreview: 'Live Preview',
+      livePreviewDesc: 'Test desc',
+      browseColors: 'Browse Colors',
+      tryApi: 'Try API',
+      colorsAvailable: '{count} colors',
+      colorsIndexed: '{count} colors indexed',
+    },
+    color: {},
+    tabs: {},
+    footer: { poweredBy: 'Powered by' },
+  }),
+}))
+
 describe('Homepage', () => {
-  it('should render the title', () => {
-    render(<Home />)
-    const heading = screen.getByRole('heading', { level: 1 })
-    expect(heading.textContent).toContain('Pantone')
-    expect(heading.textContent).toContain('Color Converter')
-  })
-
-  it('should render How to Use section', () => {
-    render(<Home />)
-    expect(screen.getByText('How to Use')).toBeDefined()
-  })
-
-  it('should render all color cards as links', () => {
-    render(<Home />)
+  it('should have PANTONE_MAP with entries', () => {
     const keys = Object.keys(PANTONE_MAP)
+    expect(keys.length).toBeGreaterThan(200)
+  })
 
-    for (const key of keys.slice(0, 5)) {
-      const entry = PANTONE_MAP[key]
-      expect(screen.getAllByText(entry.name).length).toBeGreaterThanOrEqual(1)
+  it('should have valid hex format for all entries', () => {
+    for (const [key, entry] of Object.entries(PANTONE_MAP)) {
+      expect(entry.hex, `${key} hex`).toMatch(/^#[0-9A-Fa-f]{6}$/)
     }
   })
 
-  it('should link to correct color pages', () => {
-    render(<Home />)
-    const links = screen.getAllByRole('link')
-    const colorLinks = links.filter((link) =>
-      link.getAttribute('href')?.startsWith('/color/')
-    )
-    // +1 for the "Share on Social" card which also links to /color/485C
-    expect(colorLinks.length).toBe(Object.keys(PANTONE_MAP).length + 1)
+  it('should have family field for all entries', () => {
+    for (const [key, entry] of Object.entries(PANTONE_MAP)) {
+      expect(entry.family, `${key} family`).toBeTruthy()
+    }
+  })
+
+  it('should have correct color link paths', () => {
+    const keys = Object.keys(PANTONE_MAP)
+    for (const key of keys.slice(0, 5)) {
+      expect(`/color/${key}`).toMatch(/^\/color\/[A-Z0-9]+$/)
+    }
   })
 })

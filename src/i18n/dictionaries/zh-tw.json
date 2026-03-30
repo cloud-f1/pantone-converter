@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "Pantone 色號轉換器",
+    "tagline": "即時預覽並分享 Pantone 色號，自動生成 LINE、Slack、Facebook 社群預覽圖"
+  },
+  "home": {
+    "howToUse": "如何使用",
+    "shareOnSocial": "分享到社群",
+    "shareOnSocialDesc": "複製色號頁面網址，貼到 LINE、Slack 或 Facebook。平台會自動生成帶有該顏色的預覽卡片。",
+    "apiIntegration": "API 整合",
+    "apiIntegrationDesc": "呼叫 OG 圖片 API 取得 1200x630 的 PNG 圖片。可用於電子郵件、文件或嵌入頁面。",
+    "colorReference": "色號參考",
+    "colorReferenceDesc": "瀏覽下方所有色號。點擊任一色卡可查看詳細頁面，並取得分享網址。",
+    "livePreview": "即時預覽",
+    "livePreviewDesc": "此圖片由 API 即時產生。試試更改網址參數。",
+    "browseColors": "瀏覽色號",
+    "tryApi": "試用 API",
+    "colorsAvailable": "{count} 個 Pantone C 色號",
+    "poweredBy": "技術驅動",
+    "colorsIndexed": "已收錄 {count} 個 Pantone 色號"
+  },
+  "color": {
+    "backToAll": "所有色號",
+    "shareUrl": "分享網址",
+    "ogImage": "OG 圖片",
+    "hexCode": "HEX 色碼",
+    "unknown": "未知色號",
+    "unknownDesc": "在資料庫中找不到 Pantone 色號「{code}」。",
+    "copyLink": "複製連結",
+    "copyHex": "複製",
+    "copyOg": "複製"
+  },
+  "tabs": {
+    "byColor": "依色系",
+    "bySeries": "依編號",
+    "showing": "顯示 {count} / {total} 個色號",
+    "searchPlaceholder": "搜尋色號...",
+    "noResults": "找不到色號",
+    "noResultsHint": "請嘗試其他搜尋條件"
+  },
+  "footer": {
+    "poweredBy": "技術驅動"
+  }
+}

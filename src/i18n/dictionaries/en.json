@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "Pantone Color Converter",
+    "tagline": "Instantly preview and share Pantone colors with dynamic OG images for LINE, Slack, and Facebook"
+  },
+  "home": {
+    "howToUse": "How to Use",
+    "shareOnSocial": "Share on Social",
+    "shareOnSocialDesc": "Copy a color page URL and paste into LINE, Slack, or Facebook. The platform auto-generates a rich preview card with the exact color.",
+    "apiIntegration": "API Integration",
+    "apiIntegrationDesc": "Call the OG image API to get a 1200x630 PNG of any Pantone color. Use in emails, docs, or embed in your own pages.",
+    "colorReference": "Color Reference",
+    "colorReferenceDesc": "Browse all colors below. Click any card to see the full detail page with copyable URL and color information.",
+    "livePreview": "Live Preview",
+    "livePreviewDesc": "This image is generated on-the-fly by the API. Try changing the URL parameter.",
+    "browseColors": "Browse Colors",
+    "tryApi": "Try API",
+    "colorsAvailable": "{count} Pantone C colors available",
+    "poweredBy": "Powered by",
+    "colorsIndexed": "{count} Pantone colors indexed"
+  },
+  "color": {
+    "backToAll": "All Colors",
+    "shareUrl": "Share URL",
+    "ogImage": "OG Image",
+    "hexCode": "HEX Code",
+    "unknown": "Unknown Color",
+    "unknownDesc": "The Pantone code \"{code}\" was not found in our database.",
+    "copyLink": "Copy Link",
+    "copyHex": "Copy",
+    "copyOg": "Copy"
+  },
+  "tabs": {
+    "byColor": "By Color",
+    "bySeries": "By Series",
+    "showing": "Showing {count} of {total} colors",
+    "searchPlaceholder": "Search colors...",
+    "noResults": "No colors found",
+    "noResultsHint": "Try a different search term or filter"
+  },
+  "footer": {
+    "poweredBy": "Powered by"
+  }
+}

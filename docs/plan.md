@@ -8,7 +8,7 @@ Next.js 16 Pantone color preview system with OG Image generation. 279 Pantone Co
 
 ---
 
-## Completed Steps (v1.0)
+## All Steps
 
 | Step | Description | Status |
 |:-----|:-----------|:-------|
@@ -21,6 +21,14 @@ Next.js 16 Pantone color preview system with OG Image generation. 279 Pantone Co
 | 7 | Unit tests (6 files, 33 tests) | Done |
 | 8 | Vercel deployment config (`vercel.json`) | Done |
 | 9 | UI redesign: icons, gradient header, split detail layout | Done |
+| 9.1 | Clickable "How to Use" cards | Done |
+| 10 | i18n (en, zh-TW, zh-CN) | In Progress |
+| 11 | Favicon SVG from gradient logo | Done |
+| 12 | Copy buttons + react-hot-toast | Done |
+| 13 | Color category tabs (By Color + By Series) | Done |
+| 14 | Hero header for tool page | In Progress |
+| 15 | Expand to full Pantone C set | In Progress |
+| 16 | Search, sort & filter | In Progress |
 
 ---
 
@@ -296,12 +304,106 @@ pnpm add react-hot-toast
 
 ---
 
+### Step 14: Dedicated Tool Page with Header
+
+**Feature**: Create a standalone `/tools` page (or refactor `/` ) with a proper page header banner for the color tool.
+
+**Implementation**:
+- Hero section at the top with:
+  - Gradient palette logo (large)
+  - Tool name: "Pantone Color Converter"
+  - Tagline: "Instantly preview and share Pantone colors with dynamic OG images"
+  - CTA buttons: "Browse Colors" (→ #colors) + "Try API" (→ /api/og?pantone=485C)
+- Breadcrumb or nav bar: Home → Tools → Pantone Converter
+- The existing "How to Use" + color grid sections live below the hero
+
+**Layout**:
+```
+┌─────────────────────────────────────────────────────┐
+│  ┌──────┐                                           │
+│  │ LOGO │  Pantone Color Converter                  │
+│  └──────┘  Instantly preview and share...           │
+│                                                     │
+│  [ Browse Colors ]  [ Try API ]                     │
+├─────────────────────────────────────────────────────┤
+│  How to Use ...                                     │
+│  Live Preview ...                                   │
+│  Color Tabs + Grid ...                              │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+### Step 15: Expand to Full Pantone C Set (~2161 colors)
+
+**Feature**: Import the complete Pantone Coated color library.
+
+**Implementation**:
+- Source: comprehensive Pantone-to-HEX reference data
+- Update `pantone-map.ts` with all ~2161 Pantone C entries (with `family` field)
+- Performance: the homepage grid now has 2000+ cards — needs:
+  - Virtual scrolling or pagination (show 50 per page, load more on scroll)
+  - Or lazy loading via Intersection Observer
+- Update color counts in UI and docs
+
+---
+
+### Step 16: Search, Sort & Filter (Advanced UX)
+
+**Feature**: Add a search bar, sort options, and combined filters for the color grid.
+
+**Implementation**:
+
+1. **Search bar** (above tabs):
+   - Fuzzy search by Pantone name, code, or HEX value
+   - Debounced input (300ms)
+   - Shows "No results" state with suggestions
+   - Clear button (X icon)
+
+2. **Sort options** (dropdown next to mode toggle):
+   | Sort | Description |
+   |:-----|:-----------|
+   | Default | Original dictionary order |
+   | Name A-Z | Alphabetical by Pantone name |
+   | Name Z-A | Reverse alphabetical |
+   | HEX Light→Dark | By luminance (light first) |
+   | HEX Dark→Light | By luminance (dark first) |
+   | Code Numeric | By numeric code ascending |
+
+3. **Combined filters**: Search + tab filter work together
+   - e.g., search "48" within "Reds" tab → shows matching reds
+
+4. **URL state**: Persist filter/sort/search in query params for shareable filtered views
+   - `/?tab=blue&sort=light&q=29` → Blues, sorted light-to-dark, matching "29"
+
+**Layout**:
+```
+┌─────────────────────────────────────────────────────┐
+│ [🔍 Search colors...]          [Sort: Default ▾]   │
+│                                                     │
+│ [By Color] [By Series]    Showing 42 of 279 colors  │
+│ [All] [Reds] [Blues] [Greens] ...                   │
+│                                                     │
+│ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐               │
+│ │   │ │   │ │   │ │   │ │   │ │   │               │
+│ └───┘ └───┘ └───┘ └───┘ └───┘ └───┘               │
+└─────────────────────────────────────────────────────┘
+```
+
+**Files**:
+- `src/components/color-search.tsx` (Client Component) — search input
+- `src/components/color-sort.tsx` (Client Component) — sort dropdown
+- Update `src/components/color-tabs.tsx` — integrate search + sort + filter
+- `src/features/color/lib/color-utils.ts` — add `getRelativeLuminance` to sort helpers (already exists)
+
+---
+
 ## Backlog (future)
 
-- Expand from 279 to full Pantone C set (~2000+ colors)
-- Search/filter with fuzzy matching
 - Dynamic database backend (Vercel Edge Config or Supabase)
 - Custom domain + SSL
 - Vercel Analytics integration
 - Color comparison tool (side-by-side swatches)
 - Export to PDF / color spec sheet
+- Color picker (input HEX → find closest Pantone)
+- Dark mode toggle button
