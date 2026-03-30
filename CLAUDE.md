@@ -6,41 +6,59 @@
 
 A dynamic OG Image generation system for a plastics injection factory. Converts Pantone color codes to visual preview cards that render correctly when shared on LINE, Slack, Facebook, etc.
 
-See `docs/prd.md` for full product requirements and tech architecture.
+**Production URL**: https://pantone-converter.vercel.app
+
+See `docs/prd.md` for full product requirements, `docs/plan.md` for implementation plan.
 
 ## Repository Structure
 
-Single Next.js app at root.
+Single Next.js app at root. Feature-based architecture.
 
 ```
 pantone-converter/                # Git root = Next.js app
 ├── docs/                         # PRD, tech stack, plan
 ├── src/
+│   ├── i18n/                     # Internationalization
+│   │   ├── config.ts             # Locale list (en, zh-tw, zh-cn)
+│   │   ├── get-locale.ts         # Cookie-based locale detection
+│   │   ├── get-dictionary.ts     # Dynamic dictionary loader
+│   │   └── dictionaries/         # en.json, zh-tw.json, zh-cn.json
+│   ├── components/               # Shared UI components
+│   │   ├── icons.tsx             # 8 SVG icon components
+│   │   ├── color-tabs.tsx        # Color grid with tabs, search, sort
+│   │   ├── copy-button.tsx       # Clipboard copy with toast
+│   │   ├── locale-switcher.tsx   # Headless UI language dropdown
+│   │   └── toast-provider.tsx    # react-hot-toast provider
 │   ├── features/color/           # Pantone data + color utilities
-│   │   ├── data/pantone-map.ts   # 279 Pantone C → HEX entries
-│   │   └── lib/color-utils.ts    # Luminance + contrast utils
+│   │   ├── data/pantone-map.ts   # ~496 Pantone C → HEX (with family)
+│   │   └── lib/color-utils.ts    # Luminance, contrast, fallback
 │   └── app/
-│       ├── page.tsx              # Homepage gallery + use cases
-│       ├── color/[pantone]/      # Color detail page + OG meta
+│       ├── page.tsx              # Homepage: hero, use cases, color grid
+│       ├── layout.tsx            # Root layout (metadataBase, fonts, toast)
+│       ├── globals.css           # Tailwind globals
+│       ├── color/[pantone]/      # Color detail + OG metadata + copy buttons
 │       └── api/
-│           ├── og/route.tsx      # OG image (Edge Runtime)
+│           ├── og/route.tsx      # OG image with logo (Edge Runtime)
 │           └── health/route.ts   # Health check
 ├── public/
+│   └── favicon.svg               # Gradient palette logo
 ├── vercel.json
-├── package.json
-└── vitest.config.ts
+├── vitest.config.ts
+└── package.json
 ```
 
 ## Tech Stack
 
-- **Next.js 16.2.1** (App Router) — read `node_modules/next/dist/docs/` before using any Next.js API; this version has breaking changes from earlier versions
+- **Next.js 16.2.1** (App Router) — read `node_modules/next/dist/docs/` before using any Next.js API; this version has breaking changes
 - **React 19.2.4**
 - **Tailwind CSS 4** via PostCSS
 - **TypeScript 5** (strict)
-- **pnpm** workspace
 - **`next/og`** (Satori) for OG image generation — built into Next.js 16, NOT `@vercel/og`
+- **@headlessui/react** for accessible dropdown components
+- **react-hot-toast** for copy notifications
 - **Vitest** + **React Testing Library** for testing
-- **Vercel** deployment target (Edge Functions)
+- **pnpm** package manager
+- **Vercel** deployment (Edge Functions)
 
 ## Development Commands
 
@@ -55,19 +73,26 @@ pnpm test:run     # Run tests once
 
 ## Key Conventions
 
-- **Language**: Code in English, user-facing text and documentation may be in Traditional Chinese (繁體中文)
+- **Language**: Code in English; UI supports en, zh-TW, zh-CN via cookie-based i18n
 - **Styling**: Tailwind CSS utility classes only; no CSS modules
-- **Data**: Pantone-to-HEX mapping lives in `src/features/color/data/pantone-map.ts` as a TypeScript Record (279 entries)
-- **OG Images**: Generated via `next/og` (built-in) in Edge Runtime at `/api/og?pantone=XXX`
+- **Data**: `src/features/color/data/pantone-map.ts` — ~496 entries, each with `hex`, `name`, `family` fields
+- **OG Images**: Generated via `next/og` in Edge Runtime at `/api/og?pantone=XXX`, includes gradient logo + bottom bar
 - **Routing**: `/color/[pantone]` dynamic route for individual color pages
 - **Fallback**: Unknown Pantone codes show a grey placeholder, never error
-- **Architecture**: Feature-based (`src/features/color/`) for domain logic, `src/app/` for routes
-- **Tests**: Colocated `__tests__/` directories next to source files
+- **Architecture**: Feature-based (`src/features/color/`) for domain logic, `src/components/` for shared UI, `src/app/` for routes
+- **i18n**: Dictionary JSON files in `src/i18n/dictionaries/`, loaded server-side via `getDictionary()`, locale from cookie via `getLocale()`
+- **Tests**: Colocated `__tests__/` directories; homepage tests mock i18n modules
+- **Icons**: Inline SVG components in `src/components/icons.tsx` (no icon library dependency)
+- **Copy**: `CopyButton` client component + `react-hot-toast` for clipboard operations
+- **Domain**: `pantone-converter.vercel.app` used in `metadataBase`, copy URLs, and code examples
 
 ## Important Notes
 
-- This is Next.js **16**, not 14 or 15. APIs and conventions differ. Always check the docs in `node_modules/next/dist/docs/` before writing Next.js code.
-- Dynamic params are **Promise-based** in Next.js 16: `params: Promise<{ pantone: string }>` — must await.
-- OG image route must use Edge Runtime (`export const runtime = 'edge'`).
-- Text color on OG images must auto-contrast (black/white) based on background luminance (WCAG AA).
+- This is Next.js **16**, not 14 or 15. Always check `node_modules/next/dist/docs/` before writing Next.js code.
+- Dynamic params are **Promise-based**: `params: Promise<{ pantone: string }>` — must await.
+- OG image route uses Edge Runtime (`export const runtime = 'edge'`).
+- Text color on OG images auto-contrasts (black/white) via W3C luminance formula (WCAG AA).
 - Use `import { ImageResponse } from 'next/og'` — NOT from `@vercel/og`.
+- Homepage is an **async Server Component** (uses `getLocale()` + `getDictionary()`). Tests must mock these.
+- `LocaleSwitcher` uses Headless UI `Menu` — sets `locale` cookie then calls `router.refresh()`.
+- Color entries have a `family` field used for tab filtering (red, orange, yellow, green, blue, purple, pink, brown, teal, neutral).
