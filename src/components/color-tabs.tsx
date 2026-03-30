@@ -196,53 +196,63 @@ export function ColorTabs({ entries }: ColorTabsProps) {
         </Menu>
       </div>
 
-      {/* Mode toggle */}
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
-          <button
-            onClick={() => { setMode('family'); setActiveTab('all') }}
-            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
-              mode === 'family'
-                ? 'bg-white text-zinc-900 shadow-sm dark:bg-zinc-700 dark:text-zinc-50'
-                : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
-            }`}
-          >
-            By Color
-          </button>
-          <button
-            onClick={() => { setMode('series'); setActiveTab('all') }}
-            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
-              mode === 'series'
-                ? 'bg-white text-zinc-900 shadow-sm dark:bg-zinc-700 dark:text-zinc-50'
-                : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
-            }`}
-          >
-            By Series
-          </button>
+      {/* Mode toggle + count */}
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
+            <button
+              onClick={() => { setMode('family'); setActiveTab('all') }}
+              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                mode === 'family'
+                  ? 'bg-white text-zinc-900 shadow-sm dark:bg-zinc-700 dark:text-zinc-50'
+                  : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
+              }`}
+            >
+              By Color
+            </button>
+            <button
+              onClick={() => { setMode('series'); setActiveTab('all') }}
+              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                mode === 'series'
+                  ? 'bg-white text-zinc-900 shadow-sm dark:bg-zinc-700 dark:text-zinc-50'
+                  : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
+              }`}
+            >
+              By Series
+            </button>
+          </div>
+          {activeTab !== 'all' && (
+            <button
+              onClick={() => setActiveTab('all')}
+              className="text-xs text-violet-500 hover:text-violet-700 dark:hover:text-violet-300"
+            >
+              Clear filter
+            </button>
+          )}
         </div>
-
         <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          Showing {sorted.length} of {entries.length} colors
+          {sorted.length} / {entries.length}
         </p>
       </div>
 
-      {/* Tab pills */}
-      <div className="mb-6 flex items-center gap-2 overflow-x-auto pb-2">
+      {/* Tab pills — compact, wrapping */}
+      <div className="mb-6 flex flex-wrap items-center gap-1.5">
         {tabs.map((tab) => {
           const count = getCount(tab.key)
           if (count === 0 && tab.key !== 'all') return null
+          const isActive = activeTab === tab.key
           return (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                activeTab === tab.key
-                  ? 'bg-zinc-900 text-white shadow-sm dark:bg-zinc-100 dark:text-zinc-900'
-                  : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700'
+              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                isActive
+                  ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
+                  : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700'
               }`}
             >
               {tab.label}
-              <span className="ml-1.5 text-xs opacity-60">{count}</span>
+              <span className={`ml-1 text-[10px] ${isActive ? 'opacity-70' : 'opacity-50'}`}>{count}</span>
             </button>
           )
         })}
