@@ -1879,6 +1879,13 @@ export const PANTONE_MAP: Record<string, PantoneEntry> = {
   '597C': { hex: '#2A6858', name: 'Pantone 597 C', family: 'green' },
   '598C': { hex: '#80C0B0', name: 'Pantone 598 C', family: 'teal' },
   '599C': { hex: '#58A898', name: 'Pantone 599 C', family: 'teal' },
+
+  // Factory-requested colors
+  '2169C': { hex: '#6B3077', name: 'Pantone 2169 C', family: 'purple' },
+  '4109C': { hex: '#C4A882', name: 'Pantone 4109 C', family: 'neutral' },
+  '719C': { hex: '#EDCBA8', name: 'Pantone 719 C', family: 'neutral' },
+  '2593C': { hex: '#6830A6', name: 'Pantone 2593 C', family: 'purple' },
+  '5487C': { hex: '#5E8778', name: 'Pantone 5487 C', family: 'teal' },
 }
 
 export function getPantoneColor(code: string): PantoneEntry | undefined {
