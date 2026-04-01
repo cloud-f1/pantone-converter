@@ -40,5 +40,32 @@
   },
   "footer": {
     "poweredBy": "技術驅動"
+  },
+  "compare": {
+    "title": "色差比較",
+    "subtitle": "將 Pantone 色號並排比較，測量感知色差（Delta E）",
+    "addColor": "新增色號",
+    "selectColor": "選擇一個色號",
+    "searchPlaceholder": "搜尋 Pantone...",
+    "maxColors": "最多 3 個色號",
+    "removeColor": "移除",
+    "deltaE": "Delta E 色差比較",
+    "colorDetails": "色號詳細資訊",
+    "property": "項目",
+    "name": "名稱",
+    "pantoneCode": "色號",
+    "hexCode": "HEX 色碼",
+    "rgb": "RGB",
+    "family": "色系",
+    "luminance": "亮度",
+    "shareComparison": "分享比較",
+    "copyDeltaE": "複製 Delta E",
+    "imperceptible": "無法察覺",
+    "close": "僅能察覺",
+    "noticeable": "可察覺",
+    "different": "明顯差異",
+    "veryDifferent": "差異極大",
+    "compareWith": "色差比較",
+    "compareFromDetail": "比較此色號..."
   }
 }

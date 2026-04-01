@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPantoneColor } from '@/features/color/data/pantone-map'
 import { getContrastTextColor, FALLBACK_COLOR } from '@/features/color/lib/color-utils'
-import { CopyIcon, ArrowLeftIcon, LinkIcon, CodeIcon } from '@/components/icons'
+import { CopyIcon, ArrowLeftIcon, LinkIcon, CodeIcon, CompareIcon } from '@/components/icons'
 import { CopyButton } from '@/components/copy-button'
+import { getLocale } from '@/i18n/get-locale'
+import { getDictionary } from '@/i18n/get-dictionary'
 
 type Props = {
   params: Promise<{ pantone: string }>
@@ -43,6 +45,8 @@ export default async function ColorPage({ params }: Props) {
   const color = getPantoneColor(pantone)
   const { hex, name } = color ?? FALLBACK_COLOR
   const textColor = getContrastTextColor(hex)
+  const locale = await getLocale()
+  const t = await getDictionary(locale)
 
   const shareUrl = `/color/${pantone}`
   const ogImageUrl = `/api/og?pantone=${pantone}`
@@ -153,6 +157,17 @@ export default async function ColorPage({ params }: Props) {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Compare link */}
+        <div className="mt-6 border-t border-zinc-100 pt-4 dark:border-zinc-800">
+          <a
+            href={`/compare?colors=${pantone}`}
+            className="inline-flex items-center gap-2 rounded-lg bg-violet-50 px-4 py-2.5 text-sm font-medium text-violet-700 transition-colors hover:bg-violet-100 dark:bg-violet-950/30 dark:text-violet-300 dark:hover:bg-violet-950/50"
+          >
+            <CompareIcon className="h-4 w-4" />
+            {t.compare.compareFromDetail}
+          </a>
         </div>
       </div>
     </div>

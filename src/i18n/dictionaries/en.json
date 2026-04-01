@@ -40,5 +40,32 @@
   },
   "footer": {
     "poweredBy": "Powered by"
+  },
+  "compare": {
+    "title": "Color Comparison",
+    "subtitle": "Compare Pantone colors side by side and measure perceptual difference (Delta E)",
+    "addColor": "Add Color",
+    "selectColor": "Select a color",
+    "searchPlaceholder": "Search Pantone...",
+    "maxColors": "Maximum 3 colors",
+    "removeColor": "Remove",
+    "deltaE": "Delta E Comparison",
+    "colorDetails": "Color Details",
+    "property": "Property",
+    "name": "Name",
+    "pantoneCode": "Code",
+    "hexCode": "HEX",
+    "rgb": "RGB",
+    "family": "Family",
+    "luminance": "Luminance",
+    "shareComparison": "Share Comparison",
+    "copyDeltaE": "Copy Delta E",
+    "imperceptible": "Imperceptible",
+    "close": "Barely Perceptible",
+    "noticeable": "Noticeable",
+    "different": "Different",
+    "veryDifferent": "Very Different",
+    "compareWith": "Compare Colors",
+    "compareFromDetail": "Compare with..."
   }
 }

@@ -1,5 +1,5 @@
 import { PANTONE_MAP } from '@/features/color/data/pantone-map'
-import { ShareIcon, CodeIcon, SwatchIcon, CopyIcon } from '@/components/icons'
+import { ShareIcon, CodeIcon, SwatchIcon, CopyIcon, CompareIcon } from '@/components/icons'
 import { ColorTabs } from '@/components/color-tabs'
 import { CopyButton } from '@/components/copy-button'
 import { LocaleSwitcher } from '@/components/locale-switcher'
@@ -75,6 +75,13 @@ export default async function Home() {
               className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white px-7 py-3 text-sm font-semibold text-zinc-700 transition-all hover:border-zinc-400 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:bg-zinc-800"
             >
               {t.home.tryApi}
+            </a>
+            <a
+              href="/compare"
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white px-7 py-3 text-sm font-semibold text-zinc-700 transition-all hover:border-zinc-400 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:bg-zinc-800"
+            >
+              <CompareIcon className="h-4 w-4" />
+              {t.compare.compareWith}
             </a>
           </div>
 

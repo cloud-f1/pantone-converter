@@ -4,6 +4,10 @@ import {
   getRelativeLuminance,
   getContrastTextColor,
   FALLBACK_COLOR,
+  rgbToLab,
+  hexToLab,
+  deltaE2000,
+  getDeltaECategory,
 } from '@/features/color/lib/color-utils'
 
 describe('hexToRgb', () => {
@@ -65,5 +69,76 @@ describe('FALLBACK_COLOR', () => {
 
   it('should have "Unknown Color" name', () => {
     expect(FALLBACK_COLOR.name).toBe('Unknown Color')
+  })
+})
+
+describe('rgbToLab', () => {
+  it('should convert white to L=100', () => {
+    const lab = rgbToLab(255, 255, 255)
+    expect(lab.L).toBeCloseTo(100, 0)
+    expect(lab.a).toBeCloseTo(0, 0)
+    expect(lab.b).toBeCloseTo(0, 0)
+  })
+
+  it('should convert black to L=0', () => {
+    const lab = rgbToLab(0, 0, 0)
+    expect(lab.L).toBeCloseTo(0, 0)
+    expect(lab.a).toBeCloseTo(0, 0)
+    expect(lab.b).toBeCloseTo(0, 0)
+  })
+
+  it('should convert red correctly', () => {
+    const lab = rgbToLab(255, 0, 0)
+    expect(lab.L).toBeCloseTo(53.2, 0)
+    expect(lab.a).toBeGreaterThan(70)
+  })
+})
+
+describe('deltaE2000', () => {
+  it('should return 0 for identical colors', () => {
+    const lab = hexToLab('#DA291C')
+    expect(deltaE2000(lab, lab)).toBe(0)
+  })
+
+  it('should be symmetric', () => {
+    const lab1 = hexToLab('#DA291C')
+    const lab2 = hexToLab('#003DA5')
+    expect(deltaE2000(lab1, lab2)).toBeCloseTo(deltaE2000(lab2, lab1), 10)
+  })
+
+  it('should show large difference for red vs blue', () => {
+    const lab1 = hexToLab('#DA291C')
+    const lab2 = hexToLab('#003DA5')
+    expect(deltaE2000(lab1, lab2)).toBeGreaterThan(30)
+  })
+
+  it('should show small difference for similar colors', () => {
+    const lab1 = hexToLab('#DA291C')
+    const lab2 = hexToLab('#D22730')
+    expect(deltaE2000(lab1, lab2)).toBeLessThan(6)
+  })
+
+  it('should show very large difference for black vs white', () => {
+    const lab1 = hexToLab('#000000')
+    const lab2 = hexToLab('#FFFFFF')
+    expect(deltaE2000(lab1, lab2)).toBeGreaterThan(90)
+  })
+})
+
+describe('getDeltaECategory', () => {
+  it('should categorize imperceptible', () => {
+    expect(getDeltaECategory(0.5)).toBe('imperceptible')
+  })
+  it('should categorize close', () => {
+    expect(getDeltaECategory(1.5)).toBe('close')
+  })
+  it('should categorize noticeable', () => {
+    expect(getDeltaECategory(3)).toBe('noticeable')
+  })
+  it('should categorize different', () => {
+    expect(getDeltaECategory(7)).toBe('different')
+  })
+  it('should categorize very-different', () => {
+    expect(getDeltaECategory(50)).toBe('very-different')
   })
 })
