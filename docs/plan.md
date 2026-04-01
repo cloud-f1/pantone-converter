@@ -397,12 +397,199 @@ pnpm add react-hot-toast
 
 ---
 
+### Step 17: Color Comparison with Delta E (CIEDE2000) ✅ Done
+
+- `/compare` page with 2-3 color side-by-side comparison
+- CIEDE2000 Delta E calculation
+- Shareable URLs: `/compare?colors=485C,286C`
+- OG image for compare: `/api/og/compare?colors=485C,286C`
+- Example comparisons on empty state
+- CTA on homepage + "Compare with..." on detail page
+
+---
+
+## User Feedback Features (Eva)
+
+### Step 18: 色彩搭配建議 (Color Harmonies)
+
+**來源**: Eva 回饋 —「如果是我，我可能會看一下色彩搭配」
+
+**功能**: 在色號詳細頁 (`/color/[pantone]`) 下方新增「色彩搭配建議」區塊，根據色彩學原理自動推薦搭配色。
+
+**色彩搭配類型**:
+
+| 類型 | 英文 | 說明 | 計算方式 |
+|:-----|:-----|:-----|:---------|
+| 相近色 | Analogous | 色相環上相鄰 ±30° 的顏色 | HSL hue ±30° |
+| 互補色 | Complementary | 色相環上對面 180° 的顏色 | HSL hue +180° |
+| 三角色 | Triadic | 色相環上等距 120° 的三色 | HSL hue +120°, +240° |
+| 分裂互補 | Split-Complementary | 互補色兩側各 30° | HSL hue +150°, +210° |
+| 同色系漸層 | Monochromatic | 同色相，不同明度/飽和度 | HSL lightness ±15%, ±30% |
+
+**實作方式**:
+
+1. **色彩工具函式** (`src/features/color/lib/color-utils.ts`):
+   - `hexToHsl(hex)` → `{ h, s, l }` 轉換
+   - `hslToHex(h, s, l)` → `#XXXXXX` 轉換
+   - `getAnalogousColors(hex)` → 相近色 hex 陣列
+   - `getComplementaryColor(hex)` → 互補色 hex
+   - `getTriadicColors(hex)` → 三角色 hex 陣列
+   - `getSplitComplementaryColors(hex)` → 分裂互補色 hex 陣列
+   - `getMonochromaticColors(hex)` → 同色系漸層 hex 陣列
+   - `findClosestPantone(hex)` → 在 PANTONE_MAP 中找到 Delta E 最接近的 Pantone 色號
+
+2. **色彩搭配元件** (`src/components/color-harmonies.tsx`, `"use client"`):
+   - 接收 `hex` prop
+   - 顯示 5 種搭配類型，每種用水平色票列呈現
+   - 每個計算出的 hex 顯示最接近的 Pantone 色號（用 `findClosestPantone`）
+   - 點擊任何色票可導航到該 Pantone 色號頁面
+
+3. **整合到色號詳細頁** (`src/app/color/[pantone]/page.tsx`):
+   - 在 info card 下方新增 `<ColorHarmonies hex={hex} />` 區塊
+
+**UI 設計**:
+```
+┌─────────────────────────────────────────────────────┐
+│  色彩搭配建議 (Color Harmonies)                      │
+│                                                     │
+│  相近色 (Analogous)                                  │
+│  ┌────┐ ┌────┐ [主色] ┌────┐ ┌────┐                │
+│  │-60°│ │-30°│ │ 0° │ │+30°│ │+60°│                │
+│  └────┘ └────┘ └────┘ └────┘ └────┘                │
+│                                                     │
+│  互補色 (Complementary)                              │
+│  ┌────────────┐       ┌────────────┐                │
+│  │   主色      │       │  互補色     │                │
+│  └────────────┘       └────────────┘                │
+│                                                     │
+│  三角色 (Triadic)                                    │
+│  ┌────┐ ┌────┐ ┌────┐                              │
+│  │ 0° │ │120°│ │240°│                              │
+│  └────┘ └────┘ └────┘                              │
+│                                                     │
+│  同色系漸層 (Monochromatic)                           │
+│  ┌──┐┌──┐┌──┐┌──┐[主]┌──┐┌──┐┌──┐┌──┐             │
+│  │暗││  ││  ││  ││色││  ││  ││  ││亮│             │
+│  └──┘└──┘└──┘└──┘└──┘└──┘└──┘└──┘└──┘             │
+└─────────────────────────────────────────────────────┘
+```
+
+**i18n 翻譯新增**:
+```json
+"harmonies": {
+  "title": "Color Harmonies",
+  "analogous": "Analogous",
+  "complementary": "Complementary",
+  "triadic": "Triadic",
+  "splitComplementary": "Split Complementary",
+  "monochromatic": "Monochromatic",
+  "closestPantone": "Closest Pantone"
+}
+```
+
+---
+
+### Step 19: 顏色屬性詳情 (Color Properties)
+
+**來源**: Eva 回饋 —「單一點色票的時候會有顏色屬性」
+
+**功能**: 在色號詳細頁 (`/color/[pantone]`) 擴充顏色屬性資訊，顯示完整的色彩編碼。
+
+**新增屬性**:
+
+| 屬性 | 格式 | 用途 | 計算方式 |
+|:-----|:-----|:-----|:---------|
+| HEX | #DA291C | 網頁 | 已有 |
+| RGB | 218, 41, 28 | 螢幕 | `hexToRgb()` 已有 |
+| CMYK | 0, 81, 87, 15 | 印刷 | 從 RGB 轉換 |
+| HSL | 4°, 77%, 48% | 色彩學 | 從 RGB 轉換 |
+| HSB/HSV | 4°, 87%, 85% | 設計軟體 | 從 RGB 轉換 |
+| Lab | 45.4, 59.3, 47.1 | 色彩科學 | `hexToLab()` 已有 |
+| Luminance | 0.078 | WCAG 無障礙 | `getRelativeLuminance()` 已有 |
+
+**實作方式**:
+
+1. **色彩工具函式** (`src/features/color/lib/color-utils.ts`):
+   - `rgbToCmyk(r, g, b)` → `{ c, m, y, k }` 百分比
+   - `rgbToHsl(r, g, b)` → `{ h, s, l }` (色相角度, 飽和度%, 亮度%)
+   - `rgbToHsv(r, g, b)` → `{ h, s, v }` (色相, 飽和度%, 明度%)
+
+2. **色號詳細頁增強** (`src/app/color/[pantone]/page.tsx`):
+   - 現有 info card 擴充：除了 HEX、Share URL、OG Image 外
+   - 新增「Color Properties」區塊，以表格呈現所有色彩編碼
+   - 每個值旁邊都有 CopyButton 可一鍵複製
+
+3. **UI 設計** — 放在現有 info card 的 HEX Code 行下方：
+```
+┌─────────────────────────────────────────┐
+│  顏色屬性 (Color Properties)             │
+│                                         │
+│  HEX     #DA291C               [複製]   │
+│  RGB     218, 41, 28           [複製]   │
+│  CMYK    0%, 81%, 87%, 15%     [複製]   │
+│  HSL     4°, 77%, 48%          [複製]   │
+│  HSV     4°, 87%, 85%          [複製]   │
+│  Lab     45.4, 59.3, 47.1      [複製]   │
+│  亮度    0.078                          │
+└─────────────────────────────────────────┘
+```
+
+4. **工廠材質屬性** (進階 — 可選):
+   - 在 `PantoneEntry` 類型新增可選欄位:
+     ```typescript
+     export type PantoneEntry = {
+       hex: string
+       name: string
+       family: ColorFamily
+       materials?: string[]     // ['PP', 'PS', 'ABS', 'PC', 'PE']
+       appearance?: 'solid' | 'transparent' | 'metallic' | 'fluorescent'
+       notes?: string           // 工廠備註
+     }
+     ```
+   - 初期先不填所有 1789 筆，只在工廠常用色（如 485C, 286C）手動標注
+   - 顯示在 Color Properties 區塊下方：
+     ```
+     適用材質    PP, PS, ABS
+     外觀       實色 (Solid)
+     備註       常用於紅色警示標籤
+     ```
+   - 未標注的色號不顯示此區塊
+
+**i18n 翻譯新增**:
+```json
+"properties": {
+  "title": "Color Properties",
+  "hex": "HEX",
+  "rgb": "RGB",
+  "cmyk": "CMYK",
+  "hsl": "HSL",
+  "hsv": "HSV",
+  "lab": "Lab",
+  "luminance": "Luminance",
+  "screenUse": "Screen",
+  "printUse": "Print",
+  "webUse": "Web",
+  "designUse": "Design",
+  "scienceUse": "Science",
+  "materials": "Materials",
+  "appearance": "Appearance",
+  "solid": "Solid",
+  "transparent": "Transparent",
+  "metallic": "Metallic",
+  "fluorescent": "Fluorescent",
+  "notes": "Notes"
+}
+```
+
+---
+
 ## Backlog (future)
 
 - Dynamic database backend (Vercel Edge Config or Supabase)
 - Custom domain + SSL
 - Vercel Analytics integration
-- Color comparison tool (side-by-side swatches)
 - Export to PDF / color spec sheet
 - Color picker (input HEX → find closest Pantone)
 - Dark mode toggle button
+- Color blindness simulator
+- Pantone TCX (textile) support
