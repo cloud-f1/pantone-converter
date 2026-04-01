@@ -5,6 +5,7 @@ import { getContrastTextColor, FALLBACK_COLOR } from '@/features/color/lib/color
 import { CopyIcon, ArrowLeftIcon, LinkIcon, CodeIcon, CompareIcon } from '@/components/icons'
 import { ColorHarmonies } from '@/components/color-harmonies'
 import { ColorProperties } from '@/components/color-properties'
+import { ColorQRCode } from '@/components/color-qrcode'
 import { CopyButton } from '@/components/copy-button'
 import { getLocale } from '@/i18n/get-locale'
 import { getDictionary } from '@/i18n/get-dictionary'
@@ -112,6 +113,9 @@ export default async function ColorPage({ params }: Props) {
           <a href="#harmonies" className="shrink-0 rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700">
             {t.harmonies?.title ?? 'Harmonies'}
           </a>
+          <a href="#qrcode" className="shrink-0 rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700">
+            {t.qrcode?.title ?? 'QR Code'}
+          </a>
           <a href={`/compare?colors=${pantone}`} className="shrink-0 rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700">
             {t.compare?.compareWith ?? 'Compare'}
           </a>
@@ -195,8 +199,13 @@ export default async function ColorPage({ params }: Props) {
       </div>
 
       {/* Color Harmonies */}
-      <div id="harmonies" className="mx-auto mt-6 w-full max-w-2xl scroll-mt-4 px-4 pb-12 sm:px-0">
+      <div id="harmonies" className="mx-auto mt-6 w-full max-w-2xl scroll-mt-4 px-4 sm:px-0">
         <ColorHarmonies hex={hex} dictionary={t} />
+      </div>
+
+      {/* QR Code */}
+      <div id="qrcode" className="mx-auto mt-6 w-full max-w-2xl scroll-mt-4 px-4 pb-12 sm:px-0">
+        <ColorQRCode url={`https://pantone-converter.vercel.app/color/${pantone}`} hex={hex} dictionary={t} />
       </div>
     </div>
   )

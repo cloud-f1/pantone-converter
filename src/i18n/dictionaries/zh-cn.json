@@ -94,5 +94,10 @@
     "materials": "适用材质",
     "appearance": "外观",
     "notes": "备注"
+  },
+  "qrcode": {
+    "title": "分享二维码",
+    "scanToView": "扫描即可在任何设备上查看此色号",
+    "coloredQr": "二维码颜色与 Pantone 色号相同"
   }
 }

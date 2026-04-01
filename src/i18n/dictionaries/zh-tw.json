@@ -94,5 +94,10 @@
     "materials": "適用材質",
     "appearance": "外觀",
     "notes": "備註"
+  },
+  "qrcode": {
+    "title": "分享 QR Code",
+    "scanToView": "掃描即可在任何裝置上查看此色號",
+    "coloredQr": "QR Code 顏色與 Pantone 色號相同"
   }
 }

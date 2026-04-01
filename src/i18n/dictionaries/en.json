@@ -94,5 +94,10 @@
     "materials": "Materials",
     "appearance": "Appearance",
     "notes": "Notes"
+  },
+  "qrcode": {
+    "title": "Share QR Code",
+    "scanToView": "Scan to view this color on any device",
+    "coloredQr": "QR code is colored to match the Pantone shade"
   }
 }
