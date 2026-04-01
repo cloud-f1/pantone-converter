@@ -98,6 +98,12 @@
   "qrcode": {
     "title": "Share QR Code",
     "scanToView": "Scan to view this color on any device",
-    "coloredQr": "QR code is colored to match the Pantone shade"
+    "coloredQr": "QR colored to match Pantone shade",
+    "darkQr": "Dark QR for scannability (light color)",
+    "download": "Download PNG",
+    "copyUrl": "Copy URL",
+    "share": "Share",
+    "downloaded": "QR code downloaded",
+    "copied": "URL copied"
   }
 }

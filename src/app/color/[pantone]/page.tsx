@@ -205,7 +205,7 @@ export default async function ColorPage({ params }: Props) {
 
       {/* QR Code */}
       <div id="qrcode" className="mx-auto mt-6 w-full max-w-2xl scroll-mt-4 px-4 pb-12 sm:px-0">
-        <ColorQRCode url={`https://pantone-converter.vercel.app/color/${pantone}`} hex={hex} dictionary={t} />
+        <ColorQRCode url={`https://pantone-converter.vercel.app/color/${pantone}`} hex={hex} pantoneCode={pantone} dictionary={t} />
       </div>
     </div>
   )

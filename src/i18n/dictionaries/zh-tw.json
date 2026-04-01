@@ -98,6 +98,12 @@
   "qrcode": {
     "title": "分享 QR Code",
     "scanToView": "掃描即可在任何裝置上查看此色號",
-    "coloredQr": "QR Code 顏色與 Pantone 色號相同"
+    "coloredQr": "QR Code 顏色與 Pantone 色號相同",
+    "darkQr": "淺色色號使用深色 QR Code 以確保可掃描",
+    "download": "下載 PNG",
+    "copyUrl": "複製網址",
+    "share": "分享",
+    "downloaded": "QR Code 已下載",
+    "copied": "網址已複製"
   }
 }
