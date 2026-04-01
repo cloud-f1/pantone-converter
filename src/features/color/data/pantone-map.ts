@@ -1886,6 +1886,14 @@ export const PANTONE_MAP: Record<string, PantoneEntry> = {
   '2593C': { hex: '#6830A6', name: 'Pantone 2593 C', family: 'purple' },
   '4109C': { hex: '#C4A882', name: 'Pantone 4109 C', family: 'neutral' },
   '5487C': { hex: '#5E8778', name: 'Pantone 5487 C', family: 'teal' },
+
+  // Gap fills
+  '7466C': { hex: '#00859B', name: 'Pantone 7466 C', family: 'teal' },
+  '7472C': { hex: '#5E9E88', name: 'Pantone 7472 C', family: 'teal' },
+  '7598C': { hex: '#4A5838', name: 'Pantone 7598 C', family: 'green' },
+  '7599C': { hex: '#3E4C30', name: 'Pantone 7599 C', family: 'green' },
+  '7710C': { hex: '#00A78B', name: 'Pantone 7710 C', family: 'teal' },
+  '7716C': { hex: '#008B6A', name: 'Pantone 7716 C', family: 'teal' },
 }
 
 export function getPantoneColor(code: string): PantoneEntry | undefined {
