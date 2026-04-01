@@ -101,7 +101,7 @@ export default async function Home() {
             {t.home.howToUse}
           </h2>
 
-          <div className="mb-10 grid gap-6 sm:grid-cols-3">
+          <div className="mb-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {/* Card 1: Share on Social */}
             <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
               <div className="h-1 bg-gradient-to-r from-rose-400 to-pink-500" />
@@ -166,6 +166,28 @@ export default async function Home() {
                 </p>
                 <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                   {entries.length} Pantone C colors available
+                </code>
+              </div>
+            </a>
+
+            {/* Card 4: Compare Colors */}
+            <a
+              href="/compare"
+              className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+            >
+              <div className="h-1 bg-gradient-to-r from-amber-400 to-orange-500" />
+              <div className="p-4 sm:p-6">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-amber-50 text-amber-500 dark:bg-amber-950 dark:text-amber-400">
+                  <CompareIcon className="h-5 w-5" />
+                </div>
+                <h3 className="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                  {t.compare.compareWith}
+                </h3>
+                <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                  {t.compare.subtitle}
+                </p>
+                <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                  /compare?colors=485C,286C
                 </code>
               </div>
             </a>
