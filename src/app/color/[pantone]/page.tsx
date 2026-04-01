@@ -101,6 +101,22 @@ export default async function ColorPage({ params }: Props) {
           </div>
         </div>
 
+        {/* Quick jump tabs */}
+        <div className="mb-6 flex gap-2 overflow-x-auto border-b border-zinc-100 pb-3 dark:border-zinc-800">
+          <a href="#info" className="shrink-0 rounded-full bg-zinc-900 px-3 py-1 text-xs font-medium text-white dark:bg-zinc-100 dark:text-zinc-900">
+            Info
+          </a>
+          <a href="#properties" className="shrink-0 rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700">
+            {t.properties?.title ?? 'Properties'}
+          </a>
+          <a href="#harmonies" className="shrink-0 rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700">
+            {t.harmonies?.title ?? 'Harmonies'}
+          </a>
+          <a href={`/compare?colors=${pantone}`} className="shrink-0 rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700">
+            {t.compare?.compareWith ?? 'Compare'}
+          </a>
+        </div>
+
         {!color && (
           <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-800/40 dark:bg-amber-950/30 dark:text-amber-300">
             The Pantone code &quot;{pantone}&quot; was not found in our database.
@@ -108,7 +124,7 @@ export default async function ColorPage({ params }: Props) {
         )}
 
         {/* Info rows */}
-        <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        <div id="info" className="divide-y divide-zinc-100 dark:divide-zinc-800">
           {/* Share URL */}
           <div className="flex items-start gap-3 py-4">
             <LinkIcon className="mt-0.5 h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-500" />
@@ -174,12 +190,12 @@ export default async function ColorPage({ params }: Props) {
       </div>
 
       {/* Color Properties */}
-      <div className="mx-auto mt-6 w-full max-w-2xl px-4 sm:px-0">
+      <div id="properties" className="mx-auto mt-6 w-full max-w-2xl scroll-mt-4 px-4 sm:px-0">
         <ColorProperties hex={hex} dictionary={t} />
       </div>
 
       {/* Color Harmonies */}
-      <div className="mx-auto mt-6 w-full max-w-2xl px-4 pb-12 sm:px-0">
+      <div id="harmonies" className="mx-auto mt-6 w-full max-w-2xl scroll-mt-4 px-4 pb-12 sm:px-0">
         <ColorHarmonies hex={hex} dictionary={t} />
       </div>
     </div>
