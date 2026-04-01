@@ -9,6 +9,11 @@ import { ArrowLeftIcon } from '@/components/icons'
 export const metadata: Metadata = {
   title: 'Compare Colors',
   description: 'Compare Pantone colors side by side and measure perceptual difference with Delta E (CIEDE2000)',
+  openGraph: {
+    title: 'Color Comparison — Pantone Converter',
+    description: 'Compare Pantone colors side by side with Delta E (CIEDE2000)',
+    images: [{ url: '/api/og/compare', width: 1200, height: 630 }],
+  },
 }
 
 export default async function ComparePage() {
