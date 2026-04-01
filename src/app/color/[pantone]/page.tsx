@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { getPantoneColor } from '@/features/color/data/pantone-map'
 import { getContrastTextColor, FALLBACK_COLOR } from '@/features/color/lib/color-utils'
 import { CopyIcon, ArrowLeftIcon, LinkIcon, CodeIcon, CompareIcon } from '@/components/icons'
+import { ColorHarmonies } from '@/components/color-harmonies'
+import { ColorProperties } from '@/components/color-properties'
 import { CopyButton } from '@/components/copy-button'
 import { getLocale } from '@/i18n/get-locale'
 import { getDictionary } from '@/i18n/get-dictionary'
@@ -169,6 +171,16 @@ export default async function ColorPage({ params }: Props) {
             {t.compare.compareFromDetail}
           </a>
         </div>
+      </div>
+
+      {/* Color Properties */}
+      <div className="mx-auto mt-6 w-full max-w-2xl px-4 sm:px-0">
+        <ColorProperties hex={hex} dictionary={t} />
+      </div>
+
+      {/* Color Harmonies */}
+      <div className="mx-auto mt-6 w-full max-w-2xl px-4 pb-12 sm:px-0">
+        <ColorHarmonies hex={hex} dictionary={t} />
       </div>
     </div>
   )

@@ -67,5 +67,32 @@
     "veryDifferent": "差异极大",
     "compareWith": "色差比较",
     "compareFromDetail": "比较此色号..."
+  },
+  "harmonies": {
+    "title": "色彩搭配建议",
+    "analogous": "相近色",
+    "complementary": "互补色",
+    "triadic": "三角色",
+    "splitComplementary": "分裂互补色",
+    "monochromatic": "同色系渐变",
+    "closestPantone": "最接近的 Pantone"
+  },
+  "properties": {
+    "title": "颜色属性",
+    "hex": "HEX",
+    "rgb": "RGB",
+    "cmyk": "CMYK",
+    "hsl": "HSL",
+    "hsv": "HSV",
+    "lab": "Lab",
+    "luminance": "亮度",
+    "screenUse": "屏幕",
+    "printUse": "印刷",
+    "webUse": "网页",
+    "designUse": "设计",
+    "scienceUse": "色彩科学",
+    "materials": "适用材质",
+    "appearance": "外观",
+    "notes": "备注"
   }
 }

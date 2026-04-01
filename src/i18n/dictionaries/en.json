@@ -67,5 +67,32 @@
     "veryDifferent": "Very Different",
     "compareWith": "Compare Colors",
     "compareFromDetail": "Compare with..."
+  },
+  "harmonies": {
+    "title": "Color Harmonies",
+    "analogous": "Analogous",
+    "complementary": "Complementary",
+    "triadic": "Triadic",
+    "splitComplementary": "Split Complementary",
+    "monochromatic": "Monochromatic",
+    "closestPantone": "Closest Pantone"
+  },
+  "properties": {
+    "title": "Color Properties",
+    "hex": "HEX",
+    "rgb": "RGB",
+    "cmyk": "CMYK",
+    "hsl": "HSL",
+    "hsv": "HSV",
+    "lab": "Lab",
+    "luminance": "Luminance",
+    "screenUse": "Screen",
+    "printUse": "Print",
+    "webUse": "Web",
+    "designUse": "Design",
+    "scienceUse": "Science",
+    "materials": "Materials",
+    "appearance": "Appearance",
+    "notes": "Notes"
   }
 }

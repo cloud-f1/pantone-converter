@@ -8,6 +8,12 @@ import {
   hexToLab,
   deltaE2000,
   getDeltaECategory,
+  rgbToHsl,
+  rgbToCmyk,
+  getAnalogousColors,
+  getComplementaryColor,
+  getTriadicColors,
+  getMonochromaticColors,
 } from '@/features/color/lib/color-utils'
 
 describe('hexToRgb', () => {
@@ -140,5 +146,49 @@ describe('getDeltaECategory', () => {
   })
   it('should categorize very-different', () => {
     expect(getDeltaECategory(50)).toBe('very-different')
+  })
+})
+
+describe('rgbToHsl', () => {
+  it('should convert red', () => {
+    const hsl = rgbToHsl(255, 0, 0)
+    expect(hsl.h).toBe(0)
+    expect(hsl.s).toBe(100)
+    expect(hsl.l).toBe(50)
+  })
+  it('should convert white', () => {
+    const hsl = rgbToHsl(255, 255, 255)
+    expect(hsl.l).toBe(100)
+  })
+})
+
+describe('rgbToCmyk', () => {
+  it('should convert red', () => {
+    const cmyk = rgbToCmyk(255, 0, 0)
+    expect(cmyk.c).toBe(0)
+    expect(cmyk.m).toBe(100)
+    expect(cmyk.y).toBe(100)
+    expect(cmyk.k).toBe(0)
+  })
+  it('should convert black', () => {
+    const cmyk = rgbToCmyk(0, 0, 0)
+    expect(cmyk.k).toBe(100)
+  })
+})
+
+describe('color harmonies', () => {
+  it('getAnalogousColors returns 4 colors', () => {
+    const colors = getAnalogousColors('#DA291C')
+    expect(colors).toHaveLength(4)
+    colors.forEach(c => expect(c).toMatch(/^#[0-9a-f]{6}$/))
+  })
+  it('getComplementaryColor returns valid hex', () => {
+    expect(getComplementaryColor('#DA291C')).toMatch(/^#[0-9a-f]{6}$/)
+  })
+  it('getTriadicColors returns 2 colors', () => {
+    expect(getTriadicColors('#DA291C')).toHaveLength(2)
+  })
+  it('getMonochromaticColors returns 8 shades', () => {
+    expect(getMonochromaticColors('#DA291C')).toHaveLength(8)
   })
 })

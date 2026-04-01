@@ -148,3 +148,123 @@ export function getDeltaECategory(deltaE: number): DeltaECategory {
   if (deltaE < 10) return 'different'
   return 'very-different'
 }
+
+// --- HSL, HSV, CMYK conversions ---
+
+export type HSL = { h: number; s: number; l: number }
+export type HSV = { h: number; s: number; v: number }
+export type CMYK = { c: number; m: number; y: number; k: number }
+
+export function rgbToHsl(r: number, g: number, b: number): HSL {
+  r /= 255; g /= 255; b /= 255
+  const max = Math.max(r, g, b), min = Math.min(r, g, b)
+  const l = (max + min) / 2
+  if (max === min) return { h: 0, s: 0, l: Math.round(l * 100) }
+  const d = max - min
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+  let h = 0
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6
+  else if (max === g) h = ((b - r) / d + 2) / 6
+  else h = ((r - g) / d + 4) / 6
+  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) }
+}
+
+export function hexToHsl(hex: string): HSL {
+  const { r, g, b } = hexToRgb(hex)
+  return rgbToHsl(r, g, b)
+}
+
+export function hslToHex(h: number, s: number, l: number): string {
+  s /= 100; l /= 100
+  const a = s * Math.min(l, 1 - l)
+  const f = (n: number) => {
+    const k = (n + h / 30) % 12
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)
+    return Math.round(255 * color).toString(16).padStart(2, '0')
+  }
+  return `#${f(0)}${f(8)}${f(4)}`
+}
+
+export function rgbToHsv(r: number, g: number, b: number): HSV {
+  r /= 255; g /= 255; b /= 255
+  const max = Math.max(r, g, b), min = Math.min(r, g, b)
+  const d = max - min
+  const v = max
+  const s = max === 0 ? 0 : d / max
+  let h = 0
+  if (max !== min) {
+    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6
+    else if (max === g) h = ((b - r) / d + 2) / 6
+    else h = ((r - g) / d + 4) / 6
+  }
+  return { h: Math.round(h * 360), s: Math.round(s * 100), v: Math.round(v * 100) }
+}
+
+export function hexToHsv(hex: string): HSV {
+  const { r, g, b } = hexToRgb(hex)
+  return rgbToHsv(r, g, b)
+}
+
+export function rgbToCmyk(r: number, g: number, b: number): CMYK {
+  if (r === 0 && g === 0 && b === 0) return { c: 0, m: 0, y: 0, k: 100 }
+  const rr = r / 255, gg = g / 255, bb = b / 255
+  const k = 1 - Math.max(rr, gg, bb)
+  const c = (1 - rr - k) / (1 - k)
+  const m = (1 - gg - k) / (1 - k)
+  const y = (1 - bb - k) / (1 - k)
+  return {
+    c: Math.round(c * 100),
+    m: Math.round(m * 100),
+    y: Math.round(y * 100),
+    k: Math.round(k * 100),
+  }
+}
+
+export function hexToCmyk(hex: string): CMYK {
+  const { r, g, b } = hexToRgb(hex)
+  return rgbToCmyk(r, g, b)
+}
+
+// --- Color Harmonies ---
+
+export function getAnalogousColors(hex: string): string[] {
+  const { h, s, l } = hexToHsl(hex)
+  return [
+    hslToHex((h - 60 + 360) % 360, s, l),
+    hslToHex((h - 30 + 360) % 360, s, l),
+    hslToHex((h + 30) % 360, s, l),
+    hslToHex((h + 60) % 360, s, l),
+  ]
+}
+
+export function getComplementaryColor(hex: string): string {
+  const { h, s, l } = hexToHsl(hex)
+  return hslToHex((h + 180) % 360, s, l)
+}
+
+export function getTriadicColors(hex: string): string[] {
+  const { h, s, l } = hexToHsl(hex)
+  return [
+    hslToHex((h + 120) % 360, s, l),
+    hslToHex((h + 240) % 360, s, l),
+  ]
+}
+
+export function getSplitComplementaryColors(hex: string): string[] {
+  const { h, s, l } = hexToHsl(hex)
+  return [
+    hslToHex((h + 150) % 360, s, l),
+    hslToHex((h + 210) % 360, s, l),
+  ]
+}
+
+export function getMonochromaticColors(hex: string): string[] {
+  const { h, s, l } = hexToHsl(hex)
+  const shades: string[] = []
+  for (let offset = -40; offset <= 40; offset += 10) {
+    if (offset === 0) continue
+    const newL = Math.max(5, Math.min(95, l + offset))
+    shades.push(hslToHex(h, s, newL))
+  }
+  return shades
+}
