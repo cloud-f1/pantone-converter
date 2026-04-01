@@ -132,8 +132,57 @@ export function ColorCompare({ dictionary: t }: Props) {
 
   const deltaESummary = pairs.map(p => `${p.code1} ↔ ${p.code2}: ΔE = ${p.deltaE.toFixed(1)}`).join('\n')
 
+  const hasSelection = validColors.length > 0
+
+  const examples = [
+    { colors: ['485C', '186C'], label: 'Similar Reds' },
+    { colors: ['485C', '286C', '347C'], label: 'Red vs Blue vs Green' },
+    { colors: ['2377C', '7661C', '2342C'], label: 'Morandi Tones' },
+    { colors: ['WARMGRAY5C', 'COOLGRAY5C', 'BLACKC'], label: 'Warm vs Cool' },
+    { colors: ['2935C', '286C', '300C'], label: 'Blue Shades' },
+  ]
+
+  const loadExample = useCallback((colorCodes: string[]) => {
+    const slots: (string | null)[] = [...colorCodes]
+    while (slots.length < 2) slots.push(null)
+    setCodes(slots)
+    updateUrl(slots)
+  }, [updateUrl])
+
   return (
     <div className="space-y-8">
+      {/* Example comparisons — shown when empty */}
+      {!hasSelection && (
+        <div className="rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 dark:border-zinc-800 dark:bg-zinc-900">
+          <p className="mb-3 text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            Try an example:
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {examples.map((ex) => (
+              <button
+                key={ex.label}
+                onClick={() => loadExample(ex.colors)}
+                className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-violet-600 dark:hover:bg-violet-950/30 dark:hover:text-violet-300"
+              >
+                <span className="flex gap-0.5">
+                  {ex.colors.map((c) => {
+                    const entry = getPantoneColor(c)
+                    return (
+                      <span
+                        key={c}
+                        className="h-4 w-4 rounded-sm border border-zinc-200 dark:border-zinc-600"
+                        style={{ backgroundColor: entry?.hex ?? '#808080' }}
+                      />
+                    )
+                  })}
+                </span>
+                {ex.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* A. Color Selection */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
         {codes.map((code, i) => (
