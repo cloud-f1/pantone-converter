@@ -12,8 +12,6 @@ import {
   getTetradicColors,
 } from '@/features/color/lib/color-utils'
 import { findClosestPantone } from '@/features/color/lib/find-closest'
-import type { Dictionary } from '@/i18n/get-dictionary'
-
 type HarmonyMode = 'analogous' | 'complementary' | 'triadic' | 'split' | 'tetradic'
 
 const MODES: { key: HarmonyMode; label: string }[] = [
@@ -24,9 +22,7 @@ const MODES: { key: HarmonyMode; label: string }[] = [
   { key: 'tetradic', label: 'Tetradic' },
 ]
 
-type Props = { dictionary: Dictionary }
-
-export function ColorWheel({ dictionary: _t }: Props) {
+export function ColorWheel() {
   const [hue, setHue] = useState(0)
   const [mode, setMode] = useState<HarmonyMode>('analogous')
 

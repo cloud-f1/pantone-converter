@@ -7,11 +7,7 @@ import { getContrastTextColor } from '@/features/color/lib/color-utils'
 import { CURATED_PALETTES, PALETTE_THEMES, type PaletteTheme } from '@/features/color/data/curated-palettes'
 import { CopyButton } from '@/components/copy-button'
 import { CopyIcon } from '@/components/icons'
-import type { Dictionary } from '@/i18n/get-dictionary'
-
-type Props = { dictionary: Dictionary }
-
-export function PaletteBrowser({ dictionary: _t }: Props) {
+export function PaletteBrowser() {
   const [activeTheme, setActiveTheme] = useState<PaletteTheme | 'all'>('all')
 
   const filtered = activeTheme === 'all'

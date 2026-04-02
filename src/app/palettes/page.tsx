@@ -35,7 +35,7 @@ export default async function PalettesPage() {
             {t.palettes?.subtitle ?? 'Hand-picked Pantone color palettes for designers'}
           </p>
         </div>
-        <PaletteBrowser dictionary={t} />
+        <PaletteBrowser />
       </main>
     </div>
   )

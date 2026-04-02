@@ -35,7 +35,7 @@ export default async function WheelPage() {
             {t.wheel?.subtitle ?? 'Explore color harmonies on the wheel'}
           </p>
         </div>
-        <ColorWheel dictionary={t} />
+        <ColorWheel />
       </main>
     </div>
   )
