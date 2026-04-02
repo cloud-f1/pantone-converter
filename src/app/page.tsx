@@ -2,7 +2,7 @@ import { PANTONE_MAP } from '@/features/color/data/pantone-map'
 import { ShareIcon, CodeIcon, SwatchIcon, CopyIcon, CompareIcon, PaletteIcon } from '@/components/icons'
 import { ColorTabs } from '@/components/color-tabs'
 import { CopyButton } from '@/components/copy-button'
-import { LocaleSwitcher } from '@/components/locale-switcher'
+import { NavHeader } from '@/components/nav-header'
 import { getLocale } from '@/i18n/get-locale'
 import { getDictionary } from '@/i18n/get-dictionary'
 
@@ -13,12 +13,11 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+      {/* Nav */}
+      <NavHeader locale={locale} dictionary={t} />
+
       {/* Hero */}
       <header className="relative overflow-hidden border-b border-zinc-200 bg-gradient-to-b from-zinc-50 via-white to-zinc-50 px-4 py-12 sm:px-6 sm:py-20 dark:border-zinc-800 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
-        {/* Language switcher - top right */}
-        <div className="absolute right-4 top-4 z-10 sm:right-6 sm:top-6">
-          <LocaleSwitcher current={locale} />
-        </div>
 
         {/* Decorative background blur */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
@@ -88,7 +87,7 @@ export default async function Home() {
           {/* Color count badge */}
           <div className="mt-6">
             <span className="inline-flex items-center rounded-full bg-violet-100 px-3 py-1 text-xs font-semibold text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">
-              {entries.length} colors available
+              {t.home.colorsAvailable.replace('{count}', String(entries.length))}
             </span>
           </div>
         </div>

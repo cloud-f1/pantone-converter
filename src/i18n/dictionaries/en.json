@@ -1,4 +1,11 @@
 {
+  "nav": {
+    "colors": "Colors",
+    "compare": "Compare",
+    "palette": "Palette",
+    "curated": "Curated",
+    "wheel": "Wheel"
+  },
   "site": {
     "title": "Pantone Color Converter",
     "tagline": "Instantly preview and share Pantone colors with dynamic OG images for LINE, Slack, and Facebook"

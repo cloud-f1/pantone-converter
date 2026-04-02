@@ -1,4 +1,11 @@
 {
+  "nav": {
+    "colors": "色号",
+    "compare": "比较",
+    "palette": "色票",
+    "curated": "精选",
+    "wheel": "色相环"
+  },
   "site": {
     "title": "Pantone 色号转换器",
     "tagline": "即时预览并分享 Pantone 色号，自动生成 LINE、Slack、Facebook 社交预览图"

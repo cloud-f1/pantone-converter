@@ -15,7 +15,7 @@ export default async function PalettesPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <NavHeader locale={locale} backLabel={t.color?.backToAll ?? 'All Colors'} />
+      <NavHeader locale={locale} dictionary={t} />
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
