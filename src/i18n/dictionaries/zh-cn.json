@@ -75,6 +75,8 @@
     "triadic": "三角色",
     "splitComplementary": "分裂互补色",
     "monochromatic": "同色系渐变",
+    "tetradic": "矩形搭配",
+    "doubleComplementary": "双互补色",
     "closestPantone": "最接近的 Pantone"
   },
   "properties": {
@@ -95,6 +97,22 @@
     "appearance": "外观",
     "notes": "备注"
   },
+  "palette": {
+    "title": "色票生成器",
+    "subtitle": "从任何 Pantone 色号自动生成渐变色票",
+    "searchPlaceholder": "搜索 Pantone 色号...",
+    "empty": "选择一个色号开始生成色票",
+    "generic": "通用渐变",
+    "warm": "暖色渐变",
+    "cool": "冷色渐变",
+    "pastel": "粉彩",
+    "earth": "大地色系",
+    "mono": "单色渐变"
+  },
+  "wheel": {
+    "title": "色相环",
+    "subtitle": "在互动色相环上探索色彩搭配"
+  },
   "qrcode": {
     "title": "分享二维码",
     "scanToView": "扫描即可在任何设备上查看此色号",
@@ -105,5 +123,9 @@
     "share": "分享",
     "downloaded": "二维码已下载",
     "copied": "网址已复制"
+  },
+  "palettes": {
+    "title": "精选配色方案",
+    "subtitle": "为设计师精心挑选的 Pantone 配色方案"
   }
 }

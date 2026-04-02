@@ -75,6 +75,8 @@
     "triadic": "三角色",
     "splitComplementary": "分裂互補色",
     "monochromatic": "同色系漸層",
+    "tetradic": "矩形搭配",
+    "doubleComplementary": "雙互補色",
     "closestPantone": "最接近的 Pantone"
   },
   "properties": {
@@ -95,6 +97,22 @@
     "appearance": "外觀",
     "notes": "備註"
   },
+  "palette": {
+    "title": "色票產生器",
+    "subtitle": "從任何 Pantone 色號自動產生漸層色票",
+    "searchPlaceholder": "搜尋 Pantone 色號...",
+    "empty": "選擇一個色號開始產生色票",
+    "generic": "通用漸層",
+    "warm": "暖色漸層",
+    "cool": "冷色漸層",
+    "pastel": "粉彩",
+    "earth": "大地色系",
+    "mono": "單色漸層"
+  },
+  "wheel": {
+    "title": "色相環",
+    "subtitle": "在互動色相環上探索色彩搭配"
+  },
   "qrcode": {
     "title": "分享 QR Code",
     "scanToView": "掃描即可在任何裝置上查看此色號",
@@ -105,5 +123,9 @@
     "share": "分享",
     "downloaded": "QR Code 已下載",
     "copied": "網址已複製"
+  },
+  "palettes": {
+    "title": "精選配色方案",
+    "subtitle": "為設計師精心挑選的 Pantone 配色方案"
   }
 }

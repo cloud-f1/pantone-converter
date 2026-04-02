@@ -258,6 +258,24 @@ export function getSplitComplementaryColors(hex: string): string[] {
   ]
 }
 
+export function getTetradicColors(hex: string): string[] {
+  const { h, s, l } = hexToHsl(hex)
+  return [
+    hslToHex((h + 90) % 360, s, l),
+    hslToHex((h + 180) % 360, s, l),
+    hslToHex((h + 270) % 360, s, l),
+  ]
+}
+
+export function getDoubleComplementaryColors(hex: string): string[] {
+  const { h, s, l } = hexToHsl(hex)
+  return [
+    hslToHex((h + 30) % 360, s, l),
+    hslToHex((h + 180) % 360, s, l),
+    hslToHex((h + 210) % 360, s, l),
+  ]
+}
+
 export function getMonochromaticColors(hex: string): string[] {
   const { h, s, l } = hexToHsl(hex)
   const shades: string[] = []

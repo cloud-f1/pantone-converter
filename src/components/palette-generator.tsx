@@ -1,0 +1,109 @@
+'use client'
+
+import { useState, useMemo, useCallback } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { getPantoneColor } from '@/features/color/data/pantone-map'
+import { getContrastTextColor } from '@/features/color/lib/color-utils'
+import { findClosestPantone } from '@/features/color/lib/find-closest'
+import {
+  generateGenericGradient,
+  generateWarmGradient,
+  generateCoolGradient,
+  generatePastelGradient,
+  generateEarthTones,
+  generateMonochromeGradient,
+} from '@/features/color/lib/gradient-utils'
+import { ColorSearchInput } from '@/components/color-search-input'
+import { CopyButton } from '@/components/copy-button'
+import { CopyIcon } from '@/components/icons'
+import type { Dictionary } from '@/i18n/get-dictionary'
+
+type Props = { dictionary: Dictionary }
+
+function PaletteRow({ label, colors }: { label: string; colors: string[] }) {
+  const copyText = colors.map(c => c.toUpperCase()).join(', ')
+  return (
+    <div className="rounded-xl border border-zinc-200 bg-white p-4 sm:p-5 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="mb-3 flex items-center justify-between">
+        <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{label}</h3>
+        <CopyButton text={copyText} label="" icon={<CopyIcon className="h-3.5 w-3.5" />} />
+      </div>
+      <div className="flex overflow-hidden rounded-lg">
+        {colors.map((hex, i) => {
+          const closest = findClosestPantone(hex)
+          const textColor = getContrastTextColor(hex)
+          return (
+            <div
+              key={i}
+              className="flex flex-1 flex-col items-center justify-center py-8 sm:py-12"
+              style={{ backgroundColor: hex }}
+            >
+              <span className="text-[10px] font-bold sm:text-xs" style={{ color: textColor }}>
+                {closest?.code ?? ''}
+              </span>
+              <span className="text-[9px] opacity-70 sm:text-[10px]" style={{ color: textColor }}>
+                {hex.toUpperCase()}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+export function PaletteGenerator({ dictionary: t }: Props) {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const initialCode = searchParams.get('color') ?? null
+  const [selectedCode, setSelectedCode] = useState<string | null>(
+    initialCode && getPantoneColor(initialCode) ? initialCode : null
+  )
+
+  const selectedHex = selectedCode ? getPantoneColor(selectedCode)?.hex ?? null : null
+
+  const handleSelect = useCallback((code: string | null) => {
+    setSelectedCode(code)
+    if (code) router.replace(`/palette?color=${code}`, { scroll: false })
+    else router.replace('/palette', { scroll: false })
+  }, [router])
+
+  const palettes = useMemo(() => {
+    if (!selectedHex) return null
+    return {
+      generic: generateGenericGradient(selectedHex),
+      warm: generateWarmGradient(selectedHex),
+      cool: generateCoolGradient(selectedHex),
+      pastel: generatePastelGradient(selectedHex),
+      earth: generateEarthTones(selectedHex),
+      mono: generateMonochromeGradient(selectedHex),
+    }
+  }, [selectedHex])
+
+  return (
+    <div className="space-y-6">
+      <div className="mx-auto max-w-md">
+        <ColorSearchInput
+          value={selectedCode}
+          onChange={handleSelect}
+          placeholder={t.palette?.searchPlaceholder ?? 'Search Pantone color...'}
+        />
+      </div>
+
+      {palettes ? (
+        <div className="space-y-4">
+          <PaletteRow label={t.palette?.generic ?? 'Generic Gradient'} colors={palettes.generic} />
+          <PaletteRow label={t.palette?.warm ?? 'Warm Gradient'} colors={palettes.warm} />
+          <PaletteRow label={t.palette?.cool ?? 'Cool Gradient'} colors={palettes.cool} />
+          <PaletteRow label={t.palette?.pastel ?? 'Pastel'} colors={palettes.pastel} />
+          <PaletteRow label={t.palette?.earth ?? 'Earth Tones'} colors={palettes.earth} />
+          <PaletteRow label={t.palette?.mono ?? 'Monochrome'} colors={palettes.mono} />
+        </div>
+      ) : (
+        <div className="py-20 text-center text-zinc-400 dark:text-zinc-500">
+          <p className="text-lg font-medium">{t.palette?.empty ?? 'Select a color to generate palettes'}</p>
+        </div>
+      )}
+    </div>
+  )
+}

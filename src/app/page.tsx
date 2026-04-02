@@ -1,5 +1,5 @@
 import { PANTONE_MAP } from '@/features/color/data/pantone-map'
-import { ShareIcon, CodeIcon, SwatchIcon, CopyIcon, CompareIcon } from '@/components/icons'
+import { ShareIcon, CodeIcon, SwatchIcon, CopyIcon, CompareIcon, PaletteIcon } from '@/components/icons'
 import { ColorTabs } from '@/components/color-tabs'
 import { CopyButton } from '@/components/copy-button'
 import { LocaleSwitcher } from '@/components/locale-switcher'
@@ -189,6 +189,37 @@ export default async function Home() {
                 <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                   /compare?colors=485C,286C
                 </code>
+              </div>
+            </a>
+          </div>
+
+          {/* Tools row */}
+          <div className="mb-10 grid gap-4 sm:grid-cols-3">
+            <a href="/palette" className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-orange-500 text-white">
+                <PaletteIcon className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-50">{t.palette?.title ?? 'Palette Generator'}</p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">{t.palette?.subtitle ?? 'Generate gradient palettes'}</p>
+              </div>
+            </a>
+            <a href="/palettes" className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-500 text-white">
+                <SwatchIcon className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-50">{t.palettes?.title ?? 'Curated Palettes'}</p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">{t.palettes?.subtitle ?? 'Hand-picked palettes'}</p>
+              </div>
+            </a>
+            <a href="/wheel" className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-teal-500 text-white">
+                <CompareIcon className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-50">{t.wheel?.title ?? 'Color Wheel'}</p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">{t.wheel?.subtitle ?? 'Interactive harmonies'}</p>
               </div>
             </a>
           </div>

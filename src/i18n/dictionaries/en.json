@@ -75,6 +75,8 @@
     "triadic": "Triadic",
     "splitComplementary": "Split Complementary",
     "monochromatic": "Monochromatic",
+    "tetradic": "Tetradic (Rectangle)",
+    "doubleComplementary": "Double Complementary",
     "closestPantone": "Closest Pantone"
   },
   "properties": {
@@ -95,6 +97,22 @@
     "appearance": "Appearance",
     "notes": "Notes"
   },
+  "palette": {
+    "title": "Palette Generator",
+    "subtitle": "Generate beautiful color palettes from any Pantone color",
+    "searchPlaceholder": "Search Pantone color...",
+    "empty": "Select a color to generate palettes",
+    "generic": "Generic Gradient",
+    "warm": "Warm Gradient",
+    "cool": "Cool Gradient",
+    "pastel": "Pastel",
+    "earth": "Earth Tones",
+    "mono": "Monochrome"
+  },
+  "wheel": {
+    "title": "Color Wheel",
+    "subtitle": "Explore color harmonies on the interactive wheel"
+  },
   "qrcode": {
     "title": "Share QR Code",
     "scanToView": "Scan to view this color on any device",
@@ -105,5 +123,9 @@
     "share": "Share",
     "downloaded": "QR code downloaded",
     "copied": "URL copied"
+  },
+  "palettes": {
+    "title": "Curated Palettes",
+    "subtitle": "Hand-picked Pantone color palettes for designers"
   }
 }
