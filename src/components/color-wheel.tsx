@@ -89,14 +89,15 @@ export function ColorWheel() {
               const r1 = (angle1 * Math.PI) / 180
               const r2 = (angle2 * Math.PI) / 180
               const cx = 160, cy = 160, outerR = 150, innerR = 100
-              const x1o = cx + outerR * Math.cos(r1)
-              const y1o = cy + outerR * Math.sin(r1)
-              const x2o = cx + outerR * Math.cos(r2)
-              const y2o = cy + outerR * Math.sin(r2)
-              const x1i = cx + innerR * Math.cos(r2)
-              const y1i = cy + innerR * Math.sin(r2)
-              const x2i = cx + innerR * Math.cos(r1)
-              const y2i = cy + innerR * Math.sin(r1)
+              const rd = (n: number) => Math.round(n * 100) / 100
+              const x1o = rd(cx + outerR * Math.cos(r1))
+              const y1o = rd(cy + outerR * Math.sin(r1))
+              const x2o = rd(cx + outerR * Math.cos(r2))
+              const y2o = rd(cy + outerR * Math.sin(r2))
+              const x1i = rd(cx + innerR * Math.cos(r2))
+              const y1i = rd(cy + innerR * Math.sin(r2))
+              const x2i = rd(cx + innerR * Math.cos(r1))
+              const y2i = rd(cy + innerR * Math.sin(r1))
               return (
                 <path
                   key={i}
@@ -115,8 +116,8 @@ export function ColorWheel() {
               const hueAngle = i === 0 ? hue : hexToHsl(hex).h
               const rad = (hueAngle * Math.PI) / 180
               const dotR = 125
-              const x = 160 + dotR * Math.cos(rad)
-              const y = 160 + dotR * Math.sin(rad)
+              const x = Math.round((160 + dotR * Math.cos(rad)) * 100) / 100
+              const y = Math.round((160 + dotR * Math.sin(rad)) * 100) / 100
               return (
                 <circle
                   key={i}
