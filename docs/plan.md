@@ -583,6 +583,137 @@ pnpm add react-hot-toast
 
 ---
 
+## Color Adapter — 進階配色工具（使用者回饋）
+
+### Step 20: 改善色彩搭配精準度
+
+**問題**: 使用者回饋「下面那個顏色有點落差」— 計算出的和諧色與實際 Pantone 色號差距太大。
+
+**改善方案**:
+1. **改用 findClosestPantoneN(hex, 3)** — 顯示最接近的前 3 個 Pantone 色號供選擇
+2. **加入主色作為錨點** — 每組和諧色都包含原始主色方便對照
+3. **新增矩形搭配 (Tetradic/Rectangle)** — 色相環上 4 色等距 90°
+4. **新增雙互補 (Double Complementary)** — 兩組互補色
+
+**新增色彩搭配類型**:
+| 類型 | 英文 | 計算方式 |
+|:-----|:-----|:---------|
+| 矩形搭配 | Tetradic | HSL hue +90°, +180°, +270° |
+| 雙互補 | Double Complementary | 主色+互補 + 相鄰色+相鄰互補 |
+
+---
+
+### Step 21: 漸層色票產生器 (Gradient Palette Generator)
+
+**參考**: mycolor.space — 輸入一個顏色，自動產生多種漸層色票。
+
+**路由**: `/palette` 或 `/palette?color=485C`
+
+**功能**:
+- 輸入 Pantone 色號或 HEX 值
+- 自動產生 6 種漸層色票：
+  1. **Generic Gradient** — 從主色到互補色的平滑漸層
+  2. **Warm Gradient** — 暖色系漸層（偏紅橘黃）
+  3. **Cool Gradient** — 冷色系漸層（偏藍綠紫）
+  4. **Pastel Gradient** — 粉彩柔和漸層
+  5. **Earth Tones** — 大地色系漸層
+  6. **Monochrome** — 單色深淺漸層
+- 每個色票 5-7 色，各自對應最接近的 Pantone 色號
+- 可複製整組色票（HEX 或 Pantone 代碼）
+
+**UI 設計** (類似 mycolor.space):
+```
+┌─────────────────────────────────────────────────────┐
+│  色票產生器 (Palette Generator)                       │
+│                                                     │
+│  [搜尋 Pantone...] 或 [輸入 HEX]    [產生 Generate]   │
+│                                                     │
+│  Generic Gradient                          [複製全部] │
+│  ┌────┐┌────┐┌────┐┌────┐┌────┐┌────┐              │
+│  │    ││    ││    ││    ││    ││    │              │
+│  │#845│#D65│#FF6│#FF9│#FFC│#F9F│              │
+│  └────┘└────┘└────┘└────┘└────┘└────┘              │
+│                                                     │
+│  Warm Gradient                             [複製全部] │
+│  ┌────┐┌────┐┌────┐┌────┐┌────┐┌────┐              │
+│  ...                                                │
+└─────────────────────────────────────────────────────┘
+```
+
+**實作方式**:
+- `src/app/palette/page.tsx` — Server Component shell
+- `src/components/palette-generator.tsx` — Client Component
+- `src/features/color/lib/gradient-utils.ts` — 漸層計算函式
+  - `generateGenericGradient(hex, steps)` — HSL 插值
+  - `generateWarmGradient(hex, steps)` — 偏暖色 hue shift
+  - `generateCoolGradient(hex, steps)` — 偏冷色 hue shift
+  - `generatePastelGradient(hex, steps)` — 高亮度低飽和度
+  - `generateEarthTones(hex, steps)` — 低飽和度暖色
+  - `generateMonochrome(hex, steps)` — 固定 hue，明度漸變
+
+---
+
+### Step 22: 精選色票瀏覽 (Curated Palettes — Color Hunt Style)
+
+**參考**: colorhunt.co — 精選 4 色配色方案，按主題分類。
+
+**路由**: `/palettes`
+
+**功能**:
+- 精選 50+ 組 4-5 色 Pantone 配色方案
+- 按主題分類：Pastel, Vintage, Retro, Neon, Earth, Warm, Cold, Summer, Winter, Professional
+- 每組色票顯示 4-5 個色塊（像 Color Hunt 的卡片）
+- 點擊色票 → 查看該 Pantone 色號詳細頁
+- 點擊整組 → 進入比較模式 `/compare?colors=...`
+- 可複製整組色碼
+
+**資料結構**:
+```typescript
+type CuratedPalette = {
+  id: string
+  name: string
+  theme: 'pastel' | 'vintage' | 'retro' | 'neon' | 'earth' | 'warm' | 'cold' | 'summer' | 'winter' | 'professional'
+  colors: string[] // Pantone codes: ['485C', '286C', '347C', 'YELLOWC']
+}
+```
+
+**UI 設計** (Color Hunt 風格):
+```
+┌─────────────────────────────────────────────────────┐
+│  精選配色方案 (Curated Palettes)                      │
+│                                                     │
+│  [All] [Pastel] [Vintage] [Warm] [Cold] [Earth] ... │
+│                                                     │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐          │
+│  │ ████████ │  │ ████████ │  │ ████████ │          │
+│  │ ████████ │  │ ████████ │  │ ████████ │          │
+│  │ ████████ │  │ ████████ │  │ ████████ │          │
+│  │ ████████ │  │ ████████ │  │ ████████ │          │
+│  │ [♡] [📋] │  │ [♡] [📋] │  │ [♡] [📋] │          │
+│  └──────────┘  └──────────┘  └──────────┘          │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+### Step 23: 色相環互動工具 (Color Wheel — Adobe Color Style)
+
+**參考**: color.adobe.com — 互動式色相環，可拖曳調色點。
+
+**路由**: `/wheel` 或嵌入 `/color/[pantone]` 頁面
+
+**功能**:
+- SVG 色相環（360° hue ring）
+- 可拖曳的調色點（5 個點 = 1 主色 + 4 搭配色）
+- 選擇搭配模式：Analogous / Complementary / Triadic / Split / Tetradic / Custom
+- 切換模式時，調色點自動移動到正確角度
+- 每個點顯示最接近的 Pantone 色號
+- 底部色票列同步顯示選取的顏色
+
+**注意**: 這是最複雜的功能，可能需要 canvas 或 SVG 互動。建議作為 v2 功能。
+
+---
+
 ## Backlog (future)
 
 - Dynamic database backend (Vercel Edge Config or Supabase)
@@ -593,3 +724,4 @@ pnpm add react-hot-toast
 - Dark mode toggle button
 - Color blindness simulator
 - Pantone TCX (textile) support
+- 從圖片擷取色票 (Extract palette from image)
