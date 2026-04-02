@@ -25,7 +25,7 @@ export function NavHeader({ locale, dictionary: t }: Props) {
             <Link
               key={link.href}
               href={link.href}
-              className="shrink-0 rounded-md px-2.5 py-1.5 text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+              className="shrink-0 rounded-md px-3 py-2 text-lg font-medium text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
             >
               {link.label}
             </Link>

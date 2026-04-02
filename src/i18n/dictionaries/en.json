@@ -113,7 +113,7 @@
     "warm": "Warm Gradient",
     "cool": "Cool Gradient",
     "pastel": "Pastel",
-    "earth": "Earth Tones",
+    "lightness": "Lightness Gradient",
     "mono": "Monochrome"
   },
   "wheel": {

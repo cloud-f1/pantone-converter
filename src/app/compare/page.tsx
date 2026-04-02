@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { getLocale } from '@/i18n/get-locale'
 import { getDictionary } from '@/i18n/get-dictionary'
@@ -33,7 +34,9 @@ export default async function ComparePage() {
           </p>
         </div>
 
-        <ColorCompare dictionary={t} />
+        <Suspense>
+          <ColorCompare dictionary={t} />
+        </Suspense>
       </main>
     </div>
   )

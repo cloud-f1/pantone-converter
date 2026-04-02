@@ -113,7 +113,7 @@
     "warm": "暖色漸層",
     "cool": "冷色漸層",
     "pastel": "粉彩",
-    "earth": "大地色系",
+    "lightness": "明度漸層",
     "mono": "單色漸層"
   },
   "wheel": {

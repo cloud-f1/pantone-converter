@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { getLocale } from '@/i18n/get-locale'
 import { getDictionary } from '@/i18n/get-dictionary'
@@ -25,7 +26,9 @@ export default async function PalettePage() {
             {t.palette?.subtitle ?? 'Generate beautiful color palettes from any Pantone color'}
           </p>
         </div>
-        <PaletteGenerator dictionary={t} />
+        <Suspense>
+          <PaletteGenerator dictionary={t} />
+        </Suspense>
       </main>
     </div>
   )

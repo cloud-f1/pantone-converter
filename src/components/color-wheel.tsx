@@ -4,8 +4,8 @@ import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import {
   hslToHex,
+  hexToHsl,
   getContrastTextColor,
-  getAnalogousColors,
   getComplementaryColor,
   getTriadicColors,
   getSplitComplementaryColors,
@@ -25,18 +25,30 @@ const MODES: { key: HarmonyMode; label: string }[] = [
 export function ColorWheel() {
   const [hue, setHue] = useState(0)
   const [mode, setMode] = useState<HarmonyMode>('analogous')
+  const [analogousSpacing, setAnalogousSpacing] = useState(30)
+  const [analogousCount, setAnalogousCount] = useState<3 | 5>(5)
 
   const mainHex = hslToHex(hue, 70, 50)
 
   const harmonyColors = useMemo(() => {
     switch (mode) {
-      case 'analogous': return getAnalogousColors(mainHex)
+      case 'analogous': {
+        // Generate evenly spaced points around the main hue
+        const half = Math.floor(analogousCount / 2)
+        const colors: string[] = []
+        for (let i = -half; i <= half; i++) {
+          if (i === 0) continue // skip main
+          const h = ((hue + i * analogousSpacing) % 360 + 360) % 360
+          colors.push(hslToHex(h, 70, 50))
+        }
+        return colors
+      }
       case 'complementary': return [getComplementaryColor(mainHex)]
       case 'triadic': return getTriadicColors(mainHex)
       case 'split': return getSplitComplementaryColors(mainHex)
       case 'tetradic': return getTetradicColors(mainHex)
     }
-  }, [mainHex, mode])
+  }, [mainHex, mode, hue, analogousSpacing, analogousCount])
 
   const allColors = [mainHex, ...harmonyColors]
 
@@ -100,19 +112,7 @@ export function ColorWheel() {
             <circle cx="160" cy="160" r="95" fill="white" className="dark:fill-zinc-900" />
             {/* Selected hue indicator */}
             {allColors.map((hex, i) => {
-              // Calculate approximate hue from hex for positioning
-              const hueAngle = i === 0 ? hue : (() => {
-                const r = parseInt(hex.slice(1, 3), 16) / 255
-                const g = parseInt(hex.slice(3, 5), 16) / 255
-                const b = parseInt(hex.slice(5, 7), 16) / 255
-                const max = Math.max(r, g, b), min = Math.min(r, g, b)
-                if (max === min) return 0
-                let h = 0
-                if (max === r) h = ((g - b) / (max - min) + (g < b ? 6 : 0)) / 6
-                else if (max === g) h = ((b - r) / (max - min) + 2) / 6
-                else h = ((r - g) / (max - min) + 4) / 6
-                return h * 360
-              })()
+              const hueAngle = i === 0 ? hue : hexToHsl(hex).h
               const rad = (hueAngle * Math.PI) / 180
               const dotR = 125
               const x = 160 + dotR * Math.cos(rad)
@@ -141,19 +141,62 @@ export function ColorWheel() {
         </div>
       </div>
 
-      {/* Hue slider */}
-      <div className="mx-auto max-w-sm">
-        <input
-          type="range"
-          min="0"
-          max="359"
-          value={hue}
-          onChange={(e) => setHue(parseInt(e.target.value))}
-          className="w-full accent-violet-500"
-          style={{
-            background: `linear-gradient(to right, ${Array.from({ length: 12 }, (_, i) => hslToHex(i * 30, 70, 50)).join(', ')})`
-          }}
-        />
+      {/* Sliders */}
+      <div className="mx-auto max-w-sm space-y-4">
+        {/* Hue slider */}
+        <div>
+          <div className="mb-1 flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+            <span>Hue</span>
+            <span>{hue}°</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="359"
+            value={hue}
+            onChange={(e) => setHue(parseInt(e.target.value))}
+            className="w-full accent-violet-500"
+            style={{
+              background: `linear-gradient(to right, ${Array.from({ length: 12 }, (_, i) => hslToHex(i * 30, 70, 50)).join(', ')})`
+            }}
+          />
+        </div>
+
+        {/* Analogous spacing slider + count toggle */}
+        {mode === 'analogous' && (
+          <>
+            <div>
+              <div className="mb-1 flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+                <span>Spacing</span>
+                <span>{analogousSpacing}°</span>
+              </div>
+              <input
+                type="range"
+                min="5"
+                max="60"
+                value={analogousSpacing}
+                onChange={(e) => setAnalogousSpacing(parseInt(e.target.value))}
+                className="w-full accent-violet-500"
+              />
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-xs text-zinc-500 dark:text-zinc-400">Points</span>
+              {([3, 5] as const).map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setAnalogousCount(n)}
+                  className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
+                    analogousCount === n
+                      ? 'bg-violet-600 text-white'
+                      : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700'
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Selected colors palette */}

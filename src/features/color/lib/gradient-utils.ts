@@ -51,14 +51,11 @@ export function generatePastelGradient(hex: string, steps: number = 6): string[]
   })
 }
 
-export function generateEarthTones(hex: string, steps: number = 6): string[] {
-  const { h } = hexToHsl(hex)
+export function generateLightnessGradient(hex: string, steps: number = 7): string[] {
+  const { h, s } = hexToHsl(hex)
   return Array.from({ length: steps }, (_, i) => {
-    const t = i / (steps - 1)
-    const newH = ((h + t * 40 - 20 + 30) % 360 + 360) % 360 // warm hue range
-    const newS = 25 + t * 20
-    const newL = 30 + t * 30
-    return hslToHex(Math.round(newH), Math.round(newS), Math.round(newL))
+    const l = 10 + (i / (steps - 1)) * 80 // 10% (dark) to 90% (light)
+    return hslToHex(h, s, Math.round(l))
   })
 }
 

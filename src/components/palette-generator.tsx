@@ -10,7 +10,7 @@ import {
   generateWarmGradient,
   generateCoolGradient,
   generatePastelGradient,
-  generateEarthTones,
+  generateLightnessGradient,
   generateMonochromeGradient,
 } from '@/features/color/lib/gradient-utils'
 import { ColorSearchInput } from '@/components/color-search-input'
@@ -75,7 +75,7 @@ export function PaletteGenerator({ dictionary: t }: Props) {
       warm: generateWarmGradient(selectedHex),
       cool: generateCoolGradient(selectedHex),
       pastel: generatePastelGradient(selectedHex),
-      earth: generateEarthTones(selectedHex),
+      lightness: generateLightnessGradient(selectedHex),
       mono: generateMonochromeGradient(selectedHex),
     }
   }, [selectedHex])
@@ -96,7 +96,7 @@ export function PaletteGenerator({ dictionary: t }: Props) {
           <PaletteRow label={t.palette?.warm ?? 'Warm Gradient'} colors={palettes.warm} />
           <PaletteRow label={t.palette?.cool ?? 'Cool Gradient'} colors={palettes.cool} />
           <PaletteRow label={t.palette?.pastel ?? 'Pastel'} colors={palettes.pastel} />
-          <PaletteRow label={t.palette?.earth ?? 'Earth Tones'} colors={palettes.earth} />
+          <PaletteRow label={t.palette?.lightness ?? 'Lightness Gradient'} colors={palettes.lightness} />
           <PaletteRow label={t.palette?.mono ?? 'Monochrome'} colors={palettes.mono} />
         </div>
       ) : (
