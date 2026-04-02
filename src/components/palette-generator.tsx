@@ -100,8 +100,38 @@ export function PaletteGenerator({ dictionary: t }: Props) {
           <PaletteRow label={t.palette?.mono ?? 'Monochrome'} colors={palettes.mono} />
         </div>
       ) : (
-        <div className="py-20 text-center text-zinc-400 dark:text-zinc-500">
-          <p className="text-lg font-medium">{t.palette?.empty ?? 'Select a color to generate palettes'}</p>
+        <div className="space-y-6">
+          <div className="rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 dark:border-zinc-800 dark:bg-zinc-900">
+            <p className="mb-3 text-sm font-medium text-zinc-500 dark:text-zinc-400">
+              Try an example:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { code: '485C', label: 'Red' },
+                { code: '286C', label: 'Blue' },
+                { code: '347C', label: 'Green' },
+                { code: '116C', label: 'Yellow' },
+                { code: '2685C', label: 'Purple' },
+                { code: '151C', label: 'Orange' },
+                { code: 'BLACKC', label: 'Black' },
+              ].map((ex) => {
+                const entry = getPantoneColor(ex.code)
+                return (
+                  <button
+                    key={ex.code}
+                    onClick={() => handleSelect(ex.code)}
+                    className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-violet-600 dark:hover:bg-violet-950/30"
+                  >
+                    <span className="h-4 w-4 rounded-sm border border-zinc-200 dark:border-zinc-600" style={{ backgroundColor: entry?.hex ?? '#808080' }} />
+                    {ex.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+          <div className="py-12 text-center text-zinc-400 dark:text-zinc-500">
+            <p className="text-lg font-medium">{t.palette?.empty ?? 'Select a color to generate palettes'}</p>
+          </div>
         </div>
       )}
     </div>

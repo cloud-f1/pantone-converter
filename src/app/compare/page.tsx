@@ -1,10 +1,8 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { getLocale } from '@/i18n/get-locale'
 import { getDictionary } from '@/i18n/get-dictionary'
-import { LocaleSwitcher } from '@/components/locale-switcher'
 import { ColorCompare } from '@/components/color-compare'
-import { ArrowLeftIcon } from '@/components/icons'
+import { NavHeader } from '@/components/nav-header'
 
 export const metadata: Metadata = {
   title: 'Compare Colors',
@@ -22,19 +20,7 @@ export default async function ComparePage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      {/* Top bar */}
-      <header className="border-b border-zinc-200 bg-white px-4 py-4 sm:px-6 dark:border-zinc-800 dark:bg-zinc-900">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
-          >
-            <ArrowLeftIcon className="h-4 w-4" />
-            {t.color.backToAll}
-          </Link>
-          <LocaleSwitcher current={locale} />
-        </div>
-      </header>
+      <NavHeader locale={locale} backLabel={t.color?.backToAll ?? 'All Colors'} />
 
       {/* Page content */}
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">

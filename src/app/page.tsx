@@ -193,33 +193,71 @@ export default async function Home() {
             </a>
           </div>
 
-          {/* Tools row */}
-          <div className="mb-10 grid gap-4 sm:grid-cols-3">
-            <a href="/palette" className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-orange-500 text-white">
-                <PaletteIcon className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-semibold text-zinc-900 dark:text-zinc-50">{t.palette?.title ?? 'Palette Generator'}</p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">{t.palette?.subtitle ?? 'Generate gradient palettes'}</p>
+          {/* Tools */}
+          <div className="mb-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Palette Generator */}
+            <a
+              href="/palette"
+              className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+            >
+              <div className="h-1 bg-gradient-to-r from-rose-400 to-orange-400" />
+              <div className="p-4 sm:p-6">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-rose-50 text-rose-500 dark:bg-rose-950 dark:text-rose-400">
+                  <PaletteIcon className="h-5 w-5" />
+                </div>
+                <h3 className="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                  {t.palette?.title ?? 'Palette Generator'}
+                </h3>
+                <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                  {t.palette?.subtitle ?? 'Generate beautiful color palettes'}
+                </p>
+                <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                  /palette?color=485C
+                </code>
               </div>
             </a>
-            <a href="/palettes" className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-500 text-white">
-                <SwatchIcon className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-semibold text-zinc-900 dark:text-zinc-50">{t.palettes?.title ?? 'Curated Palettes'}</p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">{t.palettes?.subtitle ?? 'Hand-picked palettes'}</p>
+
+            {/* Curated Palettes */}
+            <a
+              href="/palettes"
+              className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+            >
+              <div className="h-1 bg-gradient-to-r from-violet-400 to-purple-500" />
+              <div className="p-4 sm:p-6">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 text-violet-500 dark:bg-violet-950 dark:text-violet-400">
+                  <SwatchIcon className="h-5 w-5" />
+                </div>
+                <h3 className="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                  {t.palettes?.title ?? 'Curated Palettes'}
+                </h3>
+                <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                  {t.palettes?.subtitle ?? 'Hand-picked color palettes for designers'}
+                </p>
+                <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                  44 themed palettes
+                </code>
               </div>
             </a>
-            <a href="/wheel" className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-teal-500 text-white">
-                <CompareIcon className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-semibold text-zinc-900 dark:text-zinc-50">{t.wheel?.title ?? 'Color Wheel'}</p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">{t.wheel?.subtitle ?? 'Interactive harmonies'}</p>
+
+            {/* Color Wheel */}
+            <a
+              href="/wheel"
+              className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+            >
+              <div className="h-1 bg-gradient-to-r from-cyan-400 to-blue-500" />
+              <div className="p-4 sm:p-6">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-50 text-cyan-500 dark:bg-cyan-950 dark:text-cyan-400">
+                  <CompareIcon className="h-5 w-5" />
+                </div>
+                <h3 className="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                  {t.wheel?.title ?? 'Color Wheel'}
+                </h3>
+                <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                  {t.wheel?.subtitle ?? 'Explore color harmonies on the interactive wheel'}
+                </p>
+                <code className="mt-4 block rounded-lg bg-zinc-100 px-3 py-2 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                  5 harmony modes
+                </code>
               </div>
             </a>
           </div>
